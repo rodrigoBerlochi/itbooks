@@ -1,0 +1,54 @@
+{
+  "name": "itbooks",
+  "version": "0.0.1",
+  "author": {
+    "name": "x0s3",
+    "email": "x0s3.prog@gmail.com"
+  },
+  "homepage": "https://github.com/x0s3/itbooks",
+  "bugs": {
+    "url": "https://github.com/x0s3/itbooks/issues"
+  },
+  "private": true,
+  "scripts": {
+    "debug": "react-devtools",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "tslint -p ."
+  },
+  "dependencies": {
+    "react": "16.8.6",
+    "react-native": "0.60.5",
+    "react-native-ui-lib": "^3.35.0",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.4",
+    "redux-observable": "^1.1.0",
+    "rxjs": "^6.5.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "@types/jest": "^24.0.17",
+    "@types/react": "^16.9.2",
+    "@types/react-native": "^0.60.6",
+    "@types/react-redux": "^7.1.2",
+    "@types/react-test-renderer": "^16.9.0",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.1.0",
+    "jest": "^24.9.0",
+    "metro-minify-terser": "^0.56.0",
+    "metro-react-native-babel-preset": "^0.56.0",
+    "react-test-renderer": "16.8.6",
+    "rxjs-tslint-rules": "^4.24.3",
+    "tslint": "^5.18.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^4.0.0",
+    "tslint-react-hooks": "^2.2.1",
+    "typescript": "^3.5.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
