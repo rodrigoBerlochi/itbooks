@@ -19,7 +19,16 @@
       "jsx-no-lambda": false,
       "jsx-no-multiline-js": false,
       "member-access": false,
-      "no-console": [true, "debug", "dir", "log", "trace", "warn"],
+      "no-console": [
+        true, 
+        "debug", 
+        "dir", 
+        "log", 
+        "trace", 
+        "warn", 
+        "time", 
+        "timeEnd"
+      ],
       "no-empty-interface": false,
       "no-increment-decrement": false,
       "no-namespace": false,

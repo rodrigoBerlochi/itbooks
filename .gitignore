@@ -62,3 +62,5 @@ buck-out/
 # IDE specific
 # --------------------------------------------------
 .vscode
+
+goScrapper.go

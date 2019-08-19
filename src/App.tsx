@@ -1,108 +1,97 @@
-import React, { Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-	SafeAreaView,
+	FlatList,
+	Image,
+	NativeModules,
 	ScrollView,
-	StatusBar,
 	StyleSheet,
-	Text,
-	View,
+	TouchableOpacity,
 } from 'react-native';
-import {
-	Colors,
-	DebugInstructions,
-	Header,
-	LearnMoreLinks,
-	ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { Colors, Constants, Text, View } from 'react-native-ui-lib';
+import { FastImage } from './components/FastImage';
+
+const GUTTER_SIZE = 24;
+const NUMBER_OF_COLUMNS = 2;
 
 const App = () => {
-	const usingHermes =
-		typeof HermesInternal === 'object' && HermesInternal !== null;
+	const [books, setBooks] = useState<any>([]);
+
+	useEffect(() => {
+		NativeModules.Scrapper.fetchQueueBooks()
+			.then((data: any) => setBooks(JSON.parse(data)))
+			.catch(console.log);
+	}, []);
 
 	return (
-		<Fragment>
-			<StatusBar barStyle="dark-content" />
-			<SafeAreaView>
-				<ScrollView
-					contentInsetAdjustmentBehavior="automatic"
-					style={styles.scrollView}>
-					<Header />
-					{!usingHermes ? null : (
-						<View style={styles.engine}>
-							<Text style={styles.footer}>Engine: Hermes</Text>
-						</View>
-					)}
-					<View style={styles.body}>
-						<View style={styles.sectionContainer}>
-							<Text style={styles.sectionTitle}>Step One</Text>
-							<Text style={styles.sectionDescription}>
-								Edit <Text style={styles.highlight}>App.tsx</Text> to change
-								this screen and then come back to see your edits.
-							</Text>
-						</View>
-						<View style={styles.sectionContainer}>
-							<Text style={styles.sectionTitle}>See Your Changes</Text>
-							<Text style={styles.sectionDescription}>
-								<ReloadInstructions />
-							</Text>
-						</View>
-						<View style={styles.sectionContainer}>
-							<Text style={styles.sectionTitle}>Debug</Text>
-							<Text style={styles.sectionDescription}>
-								<DebugInstructions />
-							</Text>
-						</View>
-						<View style={styles.sectionContainer}>
-							<Text style={styles.sectionTitle}>Learn More</Text>
-							<Text style={styles.sectionDescription}>
-								Read the docs to discover what to do next:
-							</Text>
-						</View>
-						<LearnMoreLinks />
+		<View flex>
+			<ScrollView>
+				<View paddingL-24>
+					<View row spread bottom paddingR-24 style={styles.separator}>
+						<Text text20 style={{ lineHeight: 70 }}>
+							Library
+						</Text>
 					</View>
-				</ScrollView>
-			</SafeAreaView>
-		</Fragment>
+				</View>
+				<View paddingL-24>
+					<FlatList
+						data={['Recents', 'Filters', 'Downloaded Books']}
+						keyExtractor={item => item}
+						renderItem={ListItem}
+					/>
+				</View>
+				<View paddingH-24 marginT-30>
+					<Text text40>Recently Added</Text>
+					<View marginT-20>
+						<FlatList
+							horizontal={false}
+							numColumns={NUMBER_OF_COLUMNS}
+							keyExtractor={(item: any) => item.title}
+							data={books}
+							ListEmptyComponent={() => <Text>Empty</Text>}
+							renderItem={GridListItem}
+						/>
+					</View>
+				</View>
+			</ScrollView>
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-	scrollView: {
-		backgroundColor: Colors.lighter,
-	},
-	engine: {
-		position: 'absolute',
-		right: 0,
-	},
-	body: {
-		backgroundColor: Colors.white,
-	},
-	sectionContainer: {
-		marginTop: 32,
-		paddingHorizontal: 24,
-	},
-	sectionTitle: {
-		fontSize: 24,
-		fontWeight: '600',
-		color: Colors.black,
-	},
-	sectionDescription: {
-		marginTop: 8,
-		fontSize: 18,
-		fontWeight: '400',
-		color: Colors.dark,
-	},
-	highlight: {
-		fontWeight: '700',
-	},
-	footer: {
-		color: Colors.dark,
-		fontSize: 12,
-		fontWeight: '600',
-		padding: 4,
-		paddingRight: 12,
-		textAlign: 'right',
+	separator: {
+		borderBottomWidth: StyleSheet.hairlineWidth,
+		borderColor: Colors.dark60,
 	},
 });
 
 export default App;
+
+const ListItem = ({ item }: any) => {
+	return (
+		<TouchableOpacity onPress={() => {}}>
+			<View height={60} centerV style={[styles.separator]}>
+				<Text text60 red20>
+					{item}
+				</Text>
+			</View>
+		</TouchableOpacity>
+	);
+};
+
+const GridListItem = ({ item, index }: any) => {
+	const itemSize =
+		(Constants.screenWidth - GUTTER_SIZE * (NUMBER_OF_COLUMNS + 1)) /
+		NUMBER_OF_COLUMNS;
+	return (
+		<View flex marginL-24={index % NUMBER_OF_COLUMNS !== 0} marginB-24>
+			<View height={itemSize} bg-dark80>
+				<FastImage style={{ flex: 1 }} uri={item.image} />
+			</View>
+			<View paddingT-2>
+				<Text text70 dark20 numberOfLines={1}>
+					{item.title}
+				</Text>
+			</View>
+		</View>
+	);
+};
