@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
 	FlatList,
-	Image,
 	NativeModules,
 	ScrollView,
 	StyleSheet,
@@ -9,9 +8,13 @@ import {
 } from 'react-native';
 import { Colors, Constants, Text, View } from 'react-native-ui-lib';
 import { FastImage } from './components/FastImage';
+import { AnimatedRow } from './components/animated/AnimatedRow';
 
 const GUTTER_SIZE = 24;
 const NUMBER_OF_COLUMNS = 2;
+const itemSize =
+	(Constants.screenWidth - GUTTER_SIZE * (NUMBER_OF_COLUMNS + 1)) /
+	NUMBER_OF_COLUMNS;
 
 const App = () => {
 	const [books, setBooks] = useState<any>([]);
@@ -43,6 +46,14 @@ const App = () => {
 					<Text text40>Recently Added</Text>
 					<View marginT-20>
 						<FlatList
+							removeClippedSubviews={true}
+							initialNumToRender={6}
+							maxToRenderPerBatch={6}
+							getItemLayout={(data, index) => ({
+								length: itemSize,
+								offset: itemSize * index,
+								index,
+							})}
 							horizontal={false}
 							numColumns={NUMBER_OF_COLUMNS}
 							keyExtractor={(item: any) => item.title}
@@ -79,10 +90,8 @@ const ListItem = ({ item }: any) => {
 };
 
 const GridListItem = ({ item, index }: any) => {
-	const itemSize =
-		(Constants.screenWidth - GUTTER_SIZE * (NUMBER_OF_COLUMNS + 1)) /
-		NUMBER_OF_COLUMNS;
 	return (
+		// <AnimatedRow>
 		<View flex marginL-24={index % NUMBER_OF_COLUMNS !== 0} marginB-24>
 			<View height={itemSize} bg-dark80>
 				<FastImage style={{ flex: 1 }} uri={item.image} />
@@ -93,5 +102,6 @@ const GridListItem = ({ item, index }: any) => {
 				</Text>
 			</View>
 		</View>
+		// </AnimatedRow>
 	);
 };
