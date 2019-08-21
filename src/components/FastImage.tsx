@@ -16,7 +16,7 @@ export const FastImage = React.memo<FastImageType>(
 				headers,
 				priority: Image.priority.normal,
 			}}
-			resizeMode={Image.resizeMode.center}
+			resizeMode={Image.resizeMode.contain}
 		/>
 	),
 );

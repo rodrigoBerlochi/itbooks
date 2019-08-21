@@ -19,6 +19,7 @@
 		3031D19383850D3DD6039897 /* libPods-itbooks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E55E28AB9DE84E550BC6AA68 /* libPods-itbooks.a */; };
 		8D2DFB9D230C851900397D5E /* GoScrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D2DFB9C230C851900397D5E /* GoScrapper.framework */; };
 		8D2DFBA0230C8FB100397D5E /* Scrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2DFB9F230C8FB100397D5E /* Scrapper.m */; };
+		8DAACDA6230DC01300FEF130 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 8DAACDA5230DC01300FEF130 /* Fonts */; };
 		8E015158AEDBF3448BB2E649 /* libPods-itbooks-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EA92C57390992782AB2F4B /* libPods-itbooks-tvOSTests.a */; };
 		BD8E51A02EFE07F31B4AEF7B /* libPods-itbooksTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E9A750E9E131E557EBC92C7 /* libPods-itbooksTests.a */; };
 		CBD170B953D29D2CB9D3BDBB /* libPods-itbooks-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64704FA2865F204FD682F3E4 /* libPods-itbooks-tvOS.a */; };
@@ -64,6 +65,7 @@
 		8D2DFB9C230C851900397D5E /* GoScrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoScrapper.framework; sourceTree = "<group>"; };
 		8D2DFB9E230C8F6700397D5E /* Scrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Scrapper.h; path = itbooks/Scrapper.h; sourceTree = "<group>"; };
 		8D2DFB9F230C8FB100397D5E /* Scrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Scrapper.m; path = itbooks/Scrapper.m; sourceTree = "<group>"; };
+		8DAACDA5230DC01300FEF130 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		9EF3C07191939D17770C6470 /* Pods-itbooks-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-itbooks-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-itbooks-tvOSTests/Pods-itbooks-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		AFDB46D382E75A5EA8995526 /* Pods-itbooks-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-itbooks-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-itbooks-tvOS/Pods-itbooks-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		BA1691EF42422EE746EDF6A0 /* Pods-itbooks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-itbooks.release.xcconfig"; path = "Target Support Files/Pods-itbooks/Pods-itbooks.release.xcconfig"; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				8DAACDA5230DC01300FEF130 /* Fonts */,
 				8D2DFB9C230C851900397D5E /* GoScrapper.framework */,
 				13B07FAE1A68108700A75B9A /* itbooks */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -345,6 +348,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DAACDA6230DC01300FEF130 /* Fonts in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
