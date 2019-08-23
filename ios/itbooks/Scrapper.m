@@ -15,13 +15,17 @@
 RCT_EXPORT_MODULE();
 
 RCT_REMAP_METHOD(fetchQueueBooks,
+                   page:(nonnull NSNumber *)page
                    fetchQueueBooksWithResolver:(RCTPromiseResolveBlock)resolve
                    rejecter:(RCTPromiseRejectBlock)reject)
 {
-  RCTLogInfo(@"Scrapping books");
-  NSString *data = [[NSString alloc] initWithData:GoScrapperFetchQueueBooks()
-                                           encoding:NSASCIIStringEncoding];
+  RCTLogInfo(@"Scrapping books with page number %@", page);
+  
+  NSString *data = [[NSString alloc] initWithData:GoScrapperFetchQueueBooks([page longValue])
+   encoding:NSASCIIStringEncoding];
+  
   RCTLogInfo(@"Scrapped books");
+  
   resolve(data);
 }
 

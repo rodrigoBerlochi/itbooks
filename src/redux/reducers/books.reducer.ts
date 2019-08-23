@@ -25,7 +25,7 @@ export const booksReducer = createReducer<IBooksInitialState, RootAction>({
 	.handleAction(searchQueueBooks.success, (state, { payload }) => ({
 		...state,
 		fetching: false,
-		books: payload,
+		books: [...state.books, ...payload],
 		error: false,
 		currentPage: state.currentPage + 1,
 	}))

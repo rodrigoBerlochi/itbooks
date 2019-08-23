@@ -1,7 +1,7 @@
+import { AnimatedList } from '@components/animated/AnimatedList';
 import { AnimatedIcon } from '@components/animated/AnimatedTouchableIcon';
-import { FastImage } from '@components/index';
+import { AnimatedView } from '@components/animated/AnimatedView';
 import { useReduxAction, useReduxState } from '@hooks/use-redux';
-import { Book } from '@interfaces/';
 import { searchQueueBooks } from '@redux/actions';
 import { books as getBooks } from '@redux/selectors/';
 import React, { useEffect, useRef, useState } from 'react';
@@ -20,17 +20,10 @@ const { width } = Dimensions.get('screen');
 
 const { Value, Extrapolate, call, useCode } = Animated;
 
-const AnimatedView = Animated.createAnimatedComponent(View);
 const AnimatedText = Animated.createAnimatedComponent(Text);
-const AnimatedList = Animated.createAnimatedComponent(FlatList);
 const AnimatedTextInput = Animated.createAnimatedComponent(TextField);
 
-const GUTTER_SIZE = 24;
 const NUMBER_OF_COLUMNS = 2;
-
-const itemSize =
-	(Constants.screenWidth - GUTTER_SIZE * (NUMBER_OF_COLUMNS + 1)) /
-	NUMBER_OF_COLUMNS;
 
 const App = () => {
 	const refHeader = useRef(new Value(0));
@@ -64,14 +57,6 @@ const App = () => {
 	);
 
 	// useCode(call([refHeader.current], ([val]) => f(!!val)), [refHeader.current]);
-
-	// useEffect(() => {
-	// 	NativeModules.Scrapper.fetchQueueBooks()
-	// 		.then((data: any) => {
-	// 			setBooks(JSON.parse(data));
-	// 		})
-	// 		.catch(console.warn);
-	// }, []);
 
 	const headerOpacity = refHeader.current.interpolate({
 		inputRange: [-100, 0, 100, 101],
@@ -190,41 +175,22 @@ const App = () => {
 						data={['Recents', 'Filters', 'Options', 'Downloaded Books']}
 						keyExtractor={item => item}
 						renderItem={ListItem}
+						getItemLayout={(_: any, index: number) => ({
+							length: 60,
+							offset: 60 * index,
+							index,
+						})}
+						renderToHardwareTextureAndroid
+						shouldRasterizeIOS
 					/>
 				</AnimatedView>
 				<AnimatedView flex style={{ marginTop: listY }} paddingB-40 paddingH-24>
 					<Text text40>Recently Added</Text>
 					<View style={{ backgroundColor: '#FFF' }} marginT-20>
-						<AnimatedList<Book>
-							scrollEventThrottle={16}
-							onScroll={Animated.event([
-								{
-									nativeEvent: {
-										contentOffset: {
-											y: refHeader.current,
-										},
-									},
-								},
-							])}
-							bounces={false}
-							removeClippedSubviews={true}
-							initialNumToRender={6}
-							renderToHardwareTextureAndroid={true}
-							shouldRasterizeIOS={true}
-							maxToRenderPerBatch={6}
-							horizontal={false}
-							showsVerticalScrollIndicator={false}
-							getItemLayout={(_: any, index: number) => ({
-								length: itemSize,
-								offset: itemSize * index,
-								index,
-							})}
-							numColumns={NUMBER_OF_COLUMNS}
-							keyExtractor={(item: Book) => item.title}
+						<AnimatedList
 							data={books}
-							windowSize={10}
-							ListEmptyComponent={() => <Text>Empty list :(</Text>}
-							renderItem={GridListItem}
+							fetchMore={fetchBooks}
+							refScroll={refHeader}
 						/>
 					</View>
 				</AnimatedView>
@@ -270,20 +236,5 @@ const ListItem = ({ item }: any) => {
 				</Text>
 			</View>
 		</TouchableOpacity>
-	);
-};
-
-const GridListItem = ({ item, index }: any) => {
-	return (
-		<View flex marginL-24={index % NUMBER_OF_COLUMNS !== 0} marginB-24>
-			<View height={itemSize}>
-				<FastImage style={{ flex: 1 }} uri={item.image} />
-			</View>
-			<View paddingT-2>
-				<Text text70 dark20 numberOfLines={1}>
-					{item.title}
-				</Text>
-			</View>
-		</View>
 	);
 };

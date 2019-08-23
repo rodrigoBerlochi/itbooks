@@ -8,7 +8,7 @@ const searchBooksEpic$: RootEpic = (action$, store$, { scrapper }) =>
 		filter(isActionOf(searchQueueBooks.request)),
 		switchMap(_ =>
 			// pass to fetchQueueBooks store$.value.books.currentPage
-			from(scrapper.fetchQueueBooks()).pipe(
+			from(scrapper.fetchQueueBooks(store$.value.books.currentPage)).pipe(
 				map(data =>
 					searchQueueBooks.success(JSON.parse((data as unknown) as string)),
 				),

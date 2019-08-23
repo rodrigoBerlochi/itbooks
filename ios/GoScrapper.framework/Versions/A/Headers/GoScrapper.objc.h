@@ -46,9 +46,6 @@
 
 @end
 
-// skipped function Collect with unsupported parameter or return types
-
-
-FOUNDATION_EXPORT NSData* _Nullable GoScrapperFetchQueueBooks(void);
+FOUNDATION_EXPORT NSData* _Nullable GoScrapperFetchQueueBooks(long page);
 
 #endif

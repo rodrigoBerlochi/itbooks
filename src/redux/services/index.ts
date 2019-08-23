@@ -2,7 +2,7 @@ import { Book } from '@interfaces/';
 import { NativeModules } from 'react-native';
 
 interface IScrapper {
-	fetchQueueBooks(): Promise<Book[]>;
+	fetchQueueBooks(page: number): Promise<Book[]>;
 	searchBooks(): Promise<Book[]>;
 }
 

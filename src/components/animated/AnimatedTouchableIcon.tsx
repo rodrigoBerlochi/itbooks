@@ -1,9 +1,9 @@
 import React from 'react';
-import { Alert, TouchableOpacity, ViewStyle } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { TouchableOpacity, ViewStyle } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { createAnimatedComponent } from './helpers';
 
-const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+const AnimatedTouchable = createAnimatedComponent(TouchableOpacity);
 
 // TODO fix Animated value infer
 interface IIonicon {
@@ -24,7 +24,12 @@ export const AnimatedIcon: React.FC<IIonicon> = React.memo(
 		disabled = false,
 		onPress = {},
 	}) => (
-		<AnimatedTouchable disabled={disabled} onPress={onPress} style={style}>
+		<AnimatedTouchable
+			hitSlop={{ right: 20, left: 20, top: 20, bottom: 20 }}
+			disabled={disabled}
+			onPress={onPress}
+			style={style}
+		>
 			<Ionicons color={color} name={name} size={size} />
 		</AnimatedTouchable>
 	),

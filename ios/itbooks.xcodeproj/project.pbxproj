@@ -17,8 +17,8 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* itbooksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* itbooksTests.m */; };
 		3031D19383850D3DD6039897 /* libPods-itbooks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E55E28AB9DE84E550BC6AA68 /* libPods-itbooks.a */; };
-		8D2DFB9D230C851900397D5E /* GoScrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D2DFB9C230C851900397D5E /* GoScrapper.framework */; };
 		8D2DFBA0230C8FB100397D5E /* Scrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2DFB9F230C8FB100397D5E /* Scrapper.m */; };
+		8D33B50F231012B80029B9A5 /* GoScrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D33B50E2310129C0029B9A5 /* GoScrapper.framework */; };
 		8DAACDA6230DC01300FEF130 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 8DAACDA5230DC01300FEF130 /* Fonts */; };
 		8E015158AEDBF3448BB2E649 /* libPods-itbooks-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EA92C57390992782AB2F4B /* libPods-itbooks-tvOSTests.a */; };
 		BD8E51A02EFE07F31B4AEF7B /* libPods-itbooksTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E9A750E9E131E557EBC92C7 /* libPods-itbooksTests.a */; };
@@ -62,9 +62,9 @@
 		64704FA2865F204FD682F3E4 /* libPods-itbooks-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-itbooks-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E9A750E9E131E557EBC92C7 /* libPods-itbooksTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-itbooksTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78F8B6DCCC0EAF3A29C7832E /* Pods-itbooks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-itbooks.debug.xcconfig"; path = "Target Support Files/Pods-itbooks/Pods-itbooks.debug.xcconfig"; sourceTree = "<group>"; };
-		8D2DFB9C230C851900397D5E /* GoScrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoScrapper.framework; sourceTree = "<group>"; };
 		8D2DFB9E230C8F6700397D5E /* Scrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Scrapper.h; path = itbooks/Scrapper.h; sourceTree = "<group>"; };
 		8D2DFB9F230C8FB100397D5E /* Scrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Scrapper.m; path = itbooks/Scrapper.m; sourceTree = "<group>"; };
+		8D33B50E2310129C0029B9A5 /* GoScrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoScrapper.framework; sourceTree = "<group>"; };
 		8DAACDA5230DC01300FEF130 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		9EF3C07191939D17770C6470 /* Pods-itbooks-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-itbooks-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-itbooks-tvOSTests/Pods-itbooks-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		AFDB46D382E75A5EA8995526 /* Pods-itbooks-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-itbooks-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-itbooks-tvOS/Pods-itbooks-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D2DFB9D230C851900397D5E /* GoScrapper.framework in Frameworks */,
+				8D33B50F231012B80029B9A5 /* GoScrapper.framework in Frameworks */,
 				3031D19383850D3DD6039897 /* libPods-itbooks.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,6 +149,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8D33B50E2310129C0029B9A5 /* GoScrapper.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				E55E28AB9DE84E550BC6AA68 /* libPods-itbooks.a */,
@@ -170,7 +171,6 @@
 			isa = PBXGroup;
 			children = (
 				8DAACDA5230DC01300FEF130 /* Fonts */,
-				8D2DFB9C230C851900397D5E /* GoScrapper.framework */,
 				13B07FAE1A68108700A75B9A /* itbooks */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* itbooksTests */,
@@ -304,6 +304,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						LastSwiftMigration = 1010;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -384,7 +387,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -687,7 +690,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 78F8B6DCCC0EAF3A29C7832E /* Pods-itbooks.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -703,6 +708,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = itbooks;
+				SWIFT_OBJC_BRIDGING_HEADER = "itbooks-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -711,7 +719,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BA1691EF42422EE746EDF6A0 /* Pods-itbooks.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -726,6 +736,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = itbooks;
+				SWIFT_OBJC_BRIDGING_HEADER = "itbooks-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

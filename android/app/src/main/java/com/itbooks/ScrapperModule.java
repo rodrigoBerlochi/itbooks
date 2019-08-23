@@ -24,8 +24,8 @@ public class ScrapperModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     @SuppressWarnings("unused")
-    public void fetchQueueBooks(Promise promise) {
-        byte[] data = GoScrapper.fetchQueueBooks();
+    public void fetchQueueBooks(Integer page, Promise promise) {
+        byte[] data = GoScrapper.fetchQueueBooks(page);
         Log.d(NAME, new String(data, StandardCharsets.UTF_8));
         promise.resolve(new String(data, StandardCharsets.UTF_8));
     }
