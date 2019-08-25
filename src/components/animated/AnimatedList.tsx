@@ -1,74 +1,113 @@
-import React from 'react';
-import { FlatList } from 'react-native';
+import { Book } from '@interfaces/';
+import React, { useEffect, useRef, useState } from 'react';
+import { LayoutAnimation } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Constants, Text, View } from 'react-native-ui-lib';
+import {
+	DataProvider,
+	LayoutProvider,
+	RecyclerListView,
+} from 'recyclerlistview';
 import { FastImage } from '../FastImage';
 import { createAnimatedComponent } from './helpers';
+
+const RNList = createAnimatedComponent(RecyclerListView);
+
+const NOOP = () => undefined;
+
+const layoutItemAnimator = {
+	animateDidMount: () =>
+		LayoutAnimation.configureNext(
+			LayoutAnimation.create(400, 'easeInEaseOut', 'scaleXY'),
+		),
+	animateShift: NOOP,
+	animateWillMount: NOOP,
+	animateWillUnmount: NOOP,
+	animateWillUpdate: NOOP,
+};
+
+type PartialBook = Pick<Book, 'title' | 'image'>;
 
 const NUMBER_OF_COLUMNS = 2;
 const GUTTER_SIZE = 24;
 
-const itemSize =
+const itemWidth =
 	(Constants.screenWidth - GUTTER_SIZE * (NUMBER_OF_COLUMNS + 1)) /
 	NUMBER_OF_COLUMNS;
 
-const keyExtractor = (item: any) => item.title;
+const itemHeight = itemWidth + 30;
 
-const List = createAnimatedComponent(FlatList);
-
-const Empty = () => <Text>Empty list :(</Text>;
+const GridListitem = (_: any, item: PartialBook, index: number) => (
+	<View flex marginL-24={index % NUMBER_OF_COLUMNS !== 0} marginB-24>
+		<View height={itemWidth}>
+			<FastImage style={{ flex: 1 }} uri={item.image} />
+		</View>
+		<View paddingT-2>
+			<Text text70 dark20 numberOfLines={1}>
+				{item.title}
+			</Text>
+		</View>
+	</View>
+);
 
 export const AnimatedList: React.FC<{
-	data: any;
+	data: PartialBook[];
 	fetchMore: any;
 	refScroll: any;
-}> = React.memo(({ data, fetchMore, refScroll }: any) => (
-	<List
-		scrollEventThrottle={16}
-		onScroll={Animated.event([
-			{
-				nativeEvent: {
-					contentOffset: {
-						y: refScroll.current,
+}> = React.memo(({ data, fetchMore, refScroll }) => {
+	const dataProvider = useRef<DataProvider>(
+		new DataProvider((r1, r2) => r1 !== r2),
+	);
+	const layoutProvider = useRef<LayoutProvider>(
+		new LayoutProvider(
+			_ => 0,
+			(type, dim) => {
+				switch (type) {
+					case 0:
+						dim.width = itemWidth;
+						dim.height = itemHeight + 30;
+						break;
+					default:
+						dim.width = 0;
+						dim.height = 0;
+				}
+			},
+		),
+	);
+	const [books, setBooks] = useState<PartialBook[]>([]);
+
+	useEffect(() => {
+		const newBooks = data.slice(data.length - 20, data.length);
+		const newData = [...books, ...newBooks];
+		dataProvider.current = dataProvider.current.cloneWithRows(newData);
+		setBooks(newData);
+	}, [data]);
+
+	return (
+		<RNList
+			bounces={false}
+			renderToHardwareTextureAndroid={true}
+			shouldRasterizeIOS={true}
+			showsVerticalScrollIndicator={false}
+			scrollThrottle={16}
+			onScroll={Animated.event([
+				{
+					nativeEvent: {
+						contentOffset: {
+							y: refScroll.current,
+						},
 					},
 				},
-			},
-		])}
-		bounces={false}
-		removeClippedSubviews={true}
-		initialNumToRender={10}
-		renderToHardwareTextureAndroid={true}
-		shouldRasterizeIOS={true}
-		maxToRenderPerBatch={10}
-		horizontal={false}
-		showsVerticalScrollIndicator={false}
-		getItemLayout={(_: any, index: number) => ({
-			length: itemSize,
-			offset: itemSize * index,
-			index,
-		})}
-		numColumns={NUMBER_OF_COLUMNS}
-		keyExtractor={keyExtractor}
-		data={data}
-		windowSize={15}
-		ListEmptyComponent={Empty}
-		renderItem={GridListItem}
-		onEndReached={fetchMore}
-		onEndReachedThreshold={0.75}
-	/>
-));
-
-const GridListItem = ({ item, index }: any) => {
-	return (
-		<View flex marginL-24={index % NUMBER_OF_COLUMNS !== 0} marginB-24>
-			<View height={itemSize}>
-				<FastImage style={{ flex: 1 }} uri={item.image} />
-			</View>
-			<View paddingT-2>
-				<Text text70 dark20 numberOfLines={1}>
-					{item.title}
-				</Text>
-			</View>
-		</View>
+			])}
+			onEndReached={() => {
+				console.warn('jajaj');
+				fetchMore();
+			}}
+			itemAnimator={layoutItemAnimator}
+			onEndReachedThreshold={0.75}
+			layoutProvider={layoutProvider.current}
+			dataProvider={dataProvider.current}
+			rowRenderer={GridListitem}
+		/>
 	);
-};
+});

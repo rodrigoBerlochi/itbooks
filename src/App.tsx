@@ -1,3 +1,4 @@
+// import { AnimatedList } from '@components/animated/AnimatedList';
 import { AnimatedList } from '@components/animated/AnimatedList';
 import { AnimatedIcon } from '@components/animated/AnimatedTouchableIcon';
 import { AnimatedView } from '@components/animated/AnimatedView';
@@ -184,14 +185,16 @@ const App = () => {
 						shouldRasterizeIOS
 					/>
 				</AnimatedView>
-				<AnimatedView flex style={{ marginTop: listY }} paddingB-40 paddingH-24>
+				<AnimatedView flex style={{ marginTop: listY }} paddingH-24>
 					<Text text40>Recently Added</Text>
-					<View style={{ backgroundColor: '#FFF' }} marginT-20>
-						<AnimatedList
-							data={books}
-							fetchMore={fetchBooks}
-							refScroll={refHeader}
-						/>
+					<View flex style={{ backgroundColor: '#FFF' }} marginT-20>
+						{books.length > 0 && (
+							<AnimatedList
+								data={books}
+								fetchMore={fetchBooks}
+								refScroll={refHeader}
+							/>
+						)}
 					</View>
 				</AnimatedView>
 			</View>
