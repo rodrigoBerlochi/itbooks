@@ -3,7 +3,7 @@ import { NativeModules } from 'react-native';
 
 interface IScrapper {
 	fetchQueueBooks(page: number): Promise<Book[]>;
-	searchBooks(): Promise<Book[]>;
+	searchBooks(name: string, page: number): Promise<Book[]>;
 }
 
 const scrapper: IScrapper = NativeModules.Scrapper;

@@ -1,21 +1,29 @@
 import { Book } from '@interfaces/';
 import { createReducer, RootAction } from 'typesafe-actions';
-import { fetchQueueBooks } from '../actions/books.actions';
+import { fetchQueueBooks, searchBooks } from '../actions/books.actions';
 
-export interface IBooksInitialState {
+export interface ICommonState {
 	readonly books: Book[];
 	readonly fetching: boolean;
 	readonly error: boolean;
 	readonly currentPage: number;
-	readonly searchQuery: string;
 }
 
-export const booksReducer = createReducer<IBooksInitialState, RootAction>({
+const commonInitialState = {
 	books: [],
 	fetching: false,
 	error: false,
-	currentPage: 1, // (N * 2) - 1
-	searchQuery: '',
+	currentPage: 1,
+};
+
+export interface IBooksInitialState {
+	readonly mainBooks: ICommonState;
+	readonly searchBooks: ICommonState;
+}
+
+export const booksReducer = createReducer<IBooksInitialState, RootAction>({
+	mainBooks: commonInitialState,
+	searchBooks: commonInitialState,
 })
 	.handleAction(fetchQueueBooks.request, state => ({
 		...state,
@@ -24,18 +32,59 @@ export const booksReducer = createReducer<IBooksInitialState, RootAction>({
 	}))
 	.handleAction(fetchQueueBooks.success, (state, { payload }) => ({
 		...state,
-		fetching: false,
-		books: [...state.books, ...payload],
-		error: false,
-		currentPage: state.currentPage + 1,
+		mainBooks: {
+			fetching: false,
+			books: [...state.mainBooks.books, ...payload],
+			error: false,
+			currentPage: state.mainBooks.currentPage + 1,
+		},
 	}))
 	.handleAction(fetchQueueBooks.failure, state => ({
 		...state,
-		fetching: false,
-		error: true,
+		mainBooks: {
+			...state.mainBooks,
+			fetching: false,
+			error: true,
+		},
 	}))
 	.handleAction(fetchQueueBooks.request, state => ({
 		...state,
-		fetching: false,
-		error: false,
+		mainBooks: {
+			...state.mainBooks,
+			fetching: false,
+			error: false,
+		},
+	}))
+	.handleAction(searchBooks.request, state => ({
+		...state,
+		searchBooks: {
+			...state.searchBooks,
+			fetching: true,
+			error: false,
+		},
+	}))
+	.handleAction(searchBooks.success, (state, { payload }) => ({
+		...state,
+		searchBooks: {
+			fetching: false,
+			books: [...state.searchBooks.books, ...payload],
+			error: false,
+			currentPage: state.searchBooks.currentPage + 1,
+		},
+	}))
+	.handleAction(searchBooks.failure, state => ({
+		...state,
+		searchBooks: {
+			...state.searchBooks,
+			fetching: false,
+			error: true,
+		},
+	}))
+	.handleAction(searchBooks.request, state => ({
+		...state,
+		searchBooks: {
+			...state.searchBooks,
+			fetching: false,
+			error: false,
+		},
 	}));

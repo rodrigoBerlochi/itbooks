@@ -1,14 +1,15 @@
 import { from, of, pipe } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { isActionOf, RootEpic } from 'typesafe-actions';
-import { fetchQueueBooks } from '../actions/books.actions';
+import { fetchQueueBooks, searchBooks } from '../actions/books.actions';
 
-const searchBooksEpic$: RootEpic = (action$, store$, { scrapper }) =>
+const fetchBooksEpic$: RootEpic = (action$, store$, { scrapper }) =>
 	action$.pipe(
 		filter(isActionOf(fetchQueueBooks.request)),
 		switchMap(_ =>
-			// pass to fetchQueueBooks store$.value.books.currentPage
-			from(scrapper.fetchQueueBooks(store$.value.books.currentPage)).pipe(
+			from(
+				scrapper.fetchQueueBooks(store$.value.books.mainBooks.currentPage),
+			).pipe(
 				map(data =>
 					fetchQueueBooks.success(JSON.parse((data as unknown) as string)),
 				),
@@ -23,4 +24,25 @@ const searchBooksEpic$: RootEpic = (action$, store$, { scrapper }) =>
 		),
 	);
 
-export default { searchBooksEpic$ } as const;
+const searchBooksEpic$: RootEpic = (action$, store$, { scrapper }) =>
+	action$.pipe(
+		filter(isActionOf(searchBooks.request)),
+		switchMap(({ payload }) =>
+			from(
+				scrapper.searchBooks(payload, store$.value.books.mainBooks.currentPage),
+			).pipe(
+				map(data =>
+					searchBooks.success(JSON.parse((data as unknown) as string)),
+				),
+				catchError(
+					pipe(
+						searchBooks.failure,
+						of,
+					),
+				),
+				takeUntil(action$.pipe(filter(isActionOf(searchBooks.cancel)))),
+			),
+		),
+	);
+
+export default { fetchBooksEpic$, searchBooksEpic$ } as const;
