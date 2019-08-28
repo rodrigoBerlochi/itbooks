@@ -14,3 +14,8 @@ export const isSearching = (state: RootState): boolean =>
 
 export const searchedBooks = (state: RootState): Book[] =>
 	state.books.searchBooks.books;
+
+export const fetchedBook = (state: RootState): Book => state.books.fetchedBook;
+
+export const isFetchingBook = (state: RootState): boolean =>
+	state.books.fetchedBook.fetching;

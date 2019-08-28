@@ -1,6 +1,10 @@
 import { Book } from '@interfaces/';
 import { createReducer, RootAction } from 'typesafe-actions';
-import { fetchQueueBooks, searchBooks } from '../actions/books.actions';
+import {
+	fetchBook,
+	fetchQueueBooks,
+	searchBooks,
+} from '../actions/books.actions';
 
 export interface ICommonState {
 	readonly books: Book[];
@@ -19,11 +23,13 @@ const commonInitialState = {
 export interface IBooksInitialState {
 	readonly mainBooks: ICommonState;
 	readonly searchBooks: ICommonState;
+	readonly fetchedBook: Book & { fetching: boolean; error?: boolean };
 }
 
 export const booksReducer = createReducer<IBooksInitialState, RootAction>({
 	mainBooks: commonInitialState,
 	searchBooks: commonInitialState,
+	fetchedBook: { fetching: false },
 })
 	.handleAction(fetchQueueBooks.request, state => ({
 		...state,
@@ -84,6 +90,34 @@ export const booksReducer = createReducer<IBooksInitialState, RootAction>({
 		...state,
 		searchBooks: {
 			...state.searchBooks,
+			fetching: false,
+			error: false,
+		},
+	}))
+	.handleAction(fetchBook.request, state => ({
+		...state,
+		fetchedBook: {
+			fetching: true,
+			error: false, // nullish 3.7
+		},
+	}))
+	.handleAction(fetchBook.success, (state, { payload }) => ({
+		...state,
+		fetchedBook: {
+			fetching: false,
+			...payload,
+		},
+	}))
+	.handleAction(fetchBook.failure, state => ({
+		...state,
+		fetchedBook: {
+			fetching: false,
+			error: true,
+		},
+	}))
+	.handleAction(fetchBook.cancel, state => ({
+		...state,
+		fetchedBook: {
 			fetching: false,
 			error: false,
 		},

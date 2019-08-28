@@ -14,3 +14,10 @@ export const searchBooks = createAsyncAction(
 	'BOOKS_SEARCH_ERROR',
 	'BOOKS_SEARCH_CANCEL',
 )<string, Book[], undefined,undefined>();
+
+export const fetchBook = createAsyncAction(
+	'BOOKS_FETCH_ONE_REQUEST',
+	'BOOKS_FETCH_ONE_SUCCESS',
+	'BOOKS_FETCH_ONE_ERROR',
+	'BOOKS_FETCH_ONE_CANCEL',
+)<string, Book, undefined,undefined>();
