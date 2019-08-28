@@ -5815,10 +5815,10 @@ reanimated-bottom-sheet@^1.0.0-alpha.13:
   resolved "https://registry.yarnpkg.com/reanimated-bottom-sheet/-/reanimated-bottom-sheet-1.0.0-alpha.13.tgz#15a585ced256dd9d3c8450016a5acb263e29dcb9"
   integrity sha512-RuZ2riqZiWhSNDOpKmOD7JYtDS2ygTAPCDEQ9qVmBsQ/1RuJ1sh8WZRWuqdNFqExG8u2ZCj/dGg5hPAS1CtU5Q==
 
-recyclerlistview@^2.0.10-beta.3:
-  version "2.0.10-beta.3"
-  resolved "https://registry.yarnpkg.com/recyclerlistview/-/recyclerlistview-2.0.10-beta.3.tgz#a13a08bda5b6e18be17ec889849716cf6ee525a0"
-  integrity sha512-5T/AaNDWumr68KbsO7um4OvXTGZoOizPnnQs7yRUXMpYApC4hD4N9X0wBrClNAWBDjwLKifCdmOTGsyf13DQQg==
+recyclerlistview@^2.0.1-alpha.1:
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/recyclerlistview/-/recyclerlistview-2.0.12.tgz#d50ee959409947faccd3f3abf2789e7acfdc31f9"
+  integrity sha512-5krJqESA6Pf5RqeWiRL8DcoXjyHLdz5fw/B3WGe4er9hAOv5Oj6hb4RXcgLTDAeoUePuO2Dyd+MZ7n0KP9VnQQ==
   dependencies:
     lodash.debounce "4.0.8"
     prop-types "15.5.8"

@@ -11,7 +11,7 @@ import {
 import { FastImage } from '../FastImage';
 import { createAnimatedComponent } from './helpers';
 
-const RNList = createAnimatedComponent(RecyclerListView);
+const ReanimatedList = createAnimatedComponent(RecyclerListView);
 
 const NOOP = () => undefined;
 
@@ -84,7 +84,7 @@ export const AnimatedList: React.FC<{
 	}, [data]);
 
 	return (
-		<RNList
+		<ReanimatedList
 			bounces={false}
 			renderToHardwareTextureAndroid={true}
 			shouldRasterizeIOS={true}
@@ -99,10 +99,7 @@ export const AnimatedList: React.FC<{
 					},
 				},
 			])}
-			onEndReached={() => {
-				console.warn('jajaj');
-				fetchMore();
-			}}
+			onEndReached={fetchMore}
 			itemAnimator={layoutItemAnimator}
 			onEndReachedThreshold={0.75}
 			layoutProvider={layoutProvider.current}
