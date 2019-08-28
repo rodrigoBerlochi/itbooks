@@ -1,7 +1,7 @@
 import { Book } from '@interfaces/';
 import { createAsyncAction } from 'typesafe-actions';
 
-export const searchQueueBooks = createAsyncAction(
+export const fetchQueueBooks = createAsyncAction(
 	'BOOKS_QUEUE_REQUEST',
 	'BOOKS_QUEUE_SUCCESS',
 	'BOOKS_QUEUE_ERROR',

@@ -1,37 +1,41 @@
-// import { AnimatedList } from '@components/animated/AnimatedList';
-import { AnimatedList } from '@components/animated/AnimatedList';
-import { AnimatedIcon } from '@components/animated/AnimatedTouchableIcon';
-import { AnimatedView } from '@components/animated/AnimatedView';
+import {
+	AnimatedIcon,
+	AnimatedList,
+	AnimatedView,
+	OptionListItem,
+	SearchComponent,
+} from '@components/index';
 import { useReduxAction, useReduxState } from '@hooks/use-redux';
-import { searchQueueBooks } from '@redux/actions';
+import { fetchQueueBooks } from '@redux/actions';
 import { books as getBooks } from '@redux/selectors/';
 import React, { useEffect, useRef, useState } from 'react';
-import {
-	Alert,
-	Dimensions,
-	FlatList,
-	SafeAreaView,
-	StyleSheet,
-	TouchableOpacity,
-} from 'react-native';
+import { Dimensions, FlatList, SafeAreaView, StyleSheet } from 'react-native';
 import Animated, { Transition, Transitioning } from 'react-native-reanimated';
-import { Colors, Constants, Text, TextField, View } from 'react-native-ui-lib';
+import { Colors, Constants, Text, View } from 'react-native-ui-lib';
 
 const { width } = Dimensions.get('screen');
 
-const { Value, Extrapolate, call, useCode } = Animated;
+const { Value, Extrapolate } = Animated;
 
 const AnimatedText = Animated.createAnimatedComponent(Text);
-const AnimatedTextInput = Animated.createAnimatedComponent(TextField);
+const AnimatedTextInput = Animated.createAnimatedComponent(SearchComponent);
 
 const NUMBER_OF_COLUMNS = 2;
+
+const getItemLayout = (_: any, index: number) => ({
+	length: 60,
+	offset: 60 * index,
+	index,
+});
+
+const itemSeparator = () => <View style={styles.separator} />;
 
 const App = () => {
 	const refHeader = useRef(new Value(0));
 	const transitionRef = useRef(null);
 	const [search, setSearch] = useState<boolean>(false);
 	const books = useReduxState(getBooks);
-	const fetchBooks = useReduxAction(searchQueueBooks.request);
+	const fetchBooks = useReduxAction(fetchQueueBooks.request);
 
 	useEffect(() => {
 		fetchBooks();
@@ -56,8 +60,6 @@ const App = () => {
 			</Transition.Together>
 		</Transition.Sequence>
 	);
-
-	// useCode(call([refHeader.current], ([val]) => f(!!val)), [refHeader.current]);
 
 	const headerOpacity = refHeader.current.interpolate({
 		inputRange: [-100, 0, 100, 101],
@@ -126,14 +128,9 @@ const App = () => {
 							) : (
 								<AnimatedTextInput
 									key={search}
-									text70
-									red20
-									hideUnderline
-									floatingPlaceholder
-									floatingPlaceholderColor={{ focus: Colors.red20 }}
-									underlineColor={{ focus: Colors.dark20 }}
 									placeholder={'Search your book'}
-									floatOnFocus
+									action={console.warn}
+									animated={headerX}
 									style={{
 										justifyContent: 'center',
 										alignSelf: 'center',
@@ -172,15 +169,11 @@ const App = () => {
 						showsHorizontalScrollIndicator={false}
 						showsVerticalScrollIndicator={false}
 						numColumns={NUMBER_OF_COLUMNS}
-						ItemSeparatorComponent={() => <View style={styles.separator} />}
+						ItemSeparatorComponent={itemSeparator}
 						data={['Recents', 'Filters', 'Options', 'Downloaded Books']}
 						keyExtractor={item => item}
-						renderItem={ListItem}
-						getItemLayout={(_: any, index: number) => ({
-							length: 60,
-							offset: 60 * index,
-							index,
-						})}
+						renderItem={OptionListItem}
+						getItemLayout={getItemLayout}
 						renderToHardwareTextureAndroid
 						shouldRasterizeIOS
 					/>
@@ -211,33 +204,3 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
-const ListItem = ({ item }: any) => {
-	const marginLeft = item === 'Filters' && { marginLeft: 50 };
-	const marginn = item === 'Downloaded Books' && { marginLeft: 10 };
-	return (
-		<TouchableOpacity
-			style={{
-				alignSelf: 'center',
-				justifyContent: 'center',
-				...marginLeft,
-				...marginn,
-			}}
-			onPress={() => Alert.alert(item)}
-		>
-			<View
-				flex
-				marginL-24
-				marginB-24
-				height={60}
-				centerV
-				style={{ alignSelf: 'center' }}
-				// style={[styles.separator]}
-			>
-				<Text text60 red20>
-					{item}
-				</Text>
-			</View>
-		</TouchableOpacity>
-	);
-};
