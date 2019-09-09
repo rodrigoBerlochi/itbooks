@@ -9,6 +9,7 @@
     "lib": ["es6"],
     "moduleResolution": "node",
     "noEmit": true,
+    "module": "esNext",
     "strict": true,
     "target": "esnext",
     "baseUrl": ".",

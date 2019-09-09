@@ -30,7 +30,7 @@ const getItemLayout = (_: any, index: number) => ({
 
 const itemSeparator = () => <View style={styles.separator} />;
 
-const App = () => {
+const Home = () => {
 	const refHeader = useRef(new Value(0));
 	const transitionRef = useRef(null);
 	const [search, setSearch] = useState<boolean>(false);
@@ -203,4 +203,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default App;
+export default Home;

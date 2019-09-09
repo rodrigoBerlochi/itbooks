@@ -9,6 +9,7 @@ import {
 	RecyclerListView,
 } from 'recyclerlistview';
 import { FastImage } from '../FastImage';
+import { AnimatedPress } from './AnimatedPressed';
 import { createAnimatedComponent } from './helpers';
 
 const ReanimatedList = createAnimatedComponent(RecyclerListView);
@@ -38,16 +39,18 @@ const itemWidth =
 const itemHeight = itemWidth + 30;
 
 const GridListitem = (_: any, item: PartialBook, index: number) => (
-	<View flex marginL-24={index % NUMBER_OF_COLUMNS !== 0} marginB-24>
-		<View height={itemWidth}>
-			<FastImage style={{ flex: 1 }} uri={item.image} />
+	<AnimatedPress>
+		<View flex marginL-24={index % NUMBER_OF_COLUMNS !== 0} marginB-24>
+			<View height={itemWidth}>
+				<FastImage style={{ flex: 1 }} uri={item.image} />
+			</View>
+			<View paddingT-2>
+				<Text text70 dark20 numberOfLines={1}>
+					{item.title}
+				</Text>
+			</View>
 		</View>
-		<View paddingT-2>
-			<Text text70 dark20 numberOfLines={1}>
-				{item.title}
-			</Text>
-		</View>
-	</View>
+	</AnimatedPress>
 );
 
 export const AnimatedList: React.FC<{
