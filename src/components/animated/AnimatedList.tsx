@@ -38,26 +38,12 @@ const itemWidth =
 
 const itemHeight = itemWidth + 30;
 
-const GridListitem = (_: any, item: PartialBook, index: number) => (
-	<AnimatedPress>
-		<View flex marginL-24={index % NUMBER_OF_COLUMNS !== 0} marginB-24>
-			<View height={itemWidth}>
-				<FastImage style={{ flex: 1 }} uri={item.image} />
-			</View>
-			<View paddingT-2>
-				<Text text70 dark20 numberOfLines={1}>
-					{item.title}
-				</Text>
-			</View>
-		</View>
-	</AnimatedPress>
-);
-
 export const AnimatedList: React.FC<{
 	data: PartialBook[];
 	fetchMore: any;
 	refScroll: any;
-}> = React.memo(({ data, fetchMore, refScroll }) => {
+	onItemPress: () => void;
+}> = React.memo(({ data, fetchMore, refScroll, onItemPress }) => {
 	const dataProvider = useRef<DataProvider>(
 		new DataProvider((r1, r2) => r1 !== r2),
 	);
@@ -107,7 +93,20 @@ export const AnimatedList: React.FC<{
 			onEndReachedThreshold={0.75}
 			layoutProvider={layoutProvider.current}
 			dataProvider={dataProvider.current}
-			rowRenderer={GridListitem}
+			rowRenderer={(_: any, item: PartialBook, index: number) => (
+				<AnimatedPress itemAction={onItemPress}>
+					<View flex marginL-24={index % NUMBER_OF_COLUMNS !== 0} marginB-24>
+						<View height={itemWidth}>
+							<FastImage style={{ flex: 1 }} uri={item.image} />
+						</View>
+						<View paddingT-2>
+							<Text text70 dark20 numberOfLines={1}>
+								{item.title}
+							</Text>
+						</View>
+					</View>
+				</AnimatedPress>
+			)}
 		/>
 	);
 });

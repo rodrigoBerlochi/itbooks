@@ -1,7 +1,14 @@
 import React, { useCallback, useRef } from 'react';
 import { Alert, Animated, TouchableWithoutFeedback } from 'react-native';
 
-export const AnimatedPress: React.FC = ({ children }) => {
+interface IAnimatedPress {
+	itemAction: () => void;
+}
+
+export const AnimatedPress: React.FC<IAnimatedPress> = ({
+	children,
+	itemAction,
+}) => {
 	const refValue = useRef(new Animated.Value(1));
 
 	const onTap = useCallback(() => {
@@ -23,6 +30,7 @@ export const AnimatedPress: React.FC = ({ children }) => {
 	return (
 		<TouchableWithoutFeedback
 			onLongPress={() => Alert.alert('Added to fav!')}
+			onPress={itemAction}
 			onPressIn={onTap}
 			onPressOut={onTapOut}
 		>

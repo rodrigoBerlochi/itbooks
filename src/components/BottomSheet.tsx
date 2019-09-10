@@ -1,63 +1,71 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useCallback, useImperativeHandle, useRef } from 'react';
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { Button, Colors } from 'react-native-ui-lib';
 import BSheet from 'reanimated-bottom-sheet';
 
-export function BottomSheet() {
-	const refBS = useRef(null);
+export const BottomSheet = React.memo(
+	React.forwardRef(({}, ref) => {
+		const refBS = useRef(null);
 
-	const renderInner = useMemo(
-		() => (
-			<View style={styles.panel}>
-				<Text style={styles.panelTitle}>IT Books Typescript Golang</Text>
-				<Text style={styles.panelSubtitle}>
-					60fps - native modules and animations
-				</Text>
-				<Button
-					backgroundColor={Colors.red30}
-					label={'READ PDF'}
-					style={{ marginBottom: 20 }}
-					onPress={() => console.warn('Read PDF')}
-				/>
-				<Button
-					backgroundColor={Colors.red30}
-					label={'DOWNLOAD PDF'}
-					style={{ marginBottom: 20 }}
-					onPress={() => console.warn('Download PDF')}
-				/>
-				<Image
-					style={styles.photo}
-					source={{
-						uri:
-							'https://www.sitepen.com/blog/wp-content/uploads/2018/12/go_blog3.png',
-					}}
-				/>
-			</View>
-		),
-		[],
-	);
+		useImperativeHandle(ref, () => ({
+			open: () => {
+				refBS.current.snapTo(0);
+			},
+		}));
 
-	const renderHeader = useMemo(
-		() => (
-			<View style={styles.header}>
-				<View style={styles.panelHeader}>
-					<View style={styles.panelHandle} />
+		const renderInner = useCallback(
+			() => (
+				<View style={styles.panel}>
+					<Text style={styles.panelTitle}>IT Books Typescript Golang</Text>
+					<Text style={styles.panelSubtitle}>
+						60fps - native modules and animations
+					</Text>
+					<Button
+						backgroundColor={Colors.red30}
+						label={'READ PDF'}
+						style={{ marginBottom: 20 }}
+						onPress={() => console.warn('Read PDF')}
+					/>
+					<Button
+						backgroundColor={Colors.red30}
+						label={'DOWNLOAD PDF'}
+						style={{ marginBottom: 20 }}
+						onPress={() => console.warn('Download PDF')}
+					/>
+					<Image
+						style={styles.photo}
+						source={{
+							uri:
+								'https://www.sitepen.com/blog/wp-content/uploads/2018/12/go_blog3.png',
+						}}
+					/>
 				</View>
-			</View>
-		),
-		[],
-	);
+			),
+			[],
+		);
 
-	return (
-		<BSheet
-			ref={refBS}
-			snapPoints={[Dimensions.get('screen').height-75, 500, 250, 0]}
-			renderContent={() => renderInner}
-			renderHeader={() => renderHeader}
-			initialSnap={2}
-		/>
-	);
-}
+		const renderHeader = useCallback(
+			() => (
+				<View style={styles.header}>
+					<View style={styles.panelHeader}>
+						<View style={styles.panelHandle} />
+					</View>
+				</View>
+			),
+			[],
+		);
+
+		return (
+			<BSheet
+				ref={refBS}
+				snapPoints={['80%', 250, 0]}
+				renderContent={renderInner}
+				renderHeader={renderHeader}
+				initialSnap={2}
+			/>
+		);
+	}),
+);
 
 const styles = StyleSheet.create({
 	container: {

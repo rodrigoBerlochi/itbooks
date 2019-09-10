@@ -2,6 +2,7 @@ import {
 	AnimatedIcon,
 	AnimatedList,
 	AnimatedView,
+	BottomSheet,
 	OptionListItem,
 	SearchComponent,
 } from '@components/index';
@@ -31,6 +32,7 @@ const getItemLayout = (_: any, index: number) => ({
 const itemSeparator = () => <View style={styles.separator} />;
 
 const Home = () => {
+	const btRef = useRef(null);
 	const refHeader = useRef(new Value(0));
 	const transitionRef = useRef(null);
 	const [search, setSearch] = useState<boolean>(false);
@@ -185,12 +187,13 @@ const Home = () => {
 								data={books}
 								fetchMore={fetchBooks}
 								refScroll={refHeader}
+								onItemPress={() => btRef.current.open()}
 							/>
 						)}
 					</View>
 				</AnimatedView>
 			</View>
-			{/* <BottomSheet /> */}
+			<BottomSheet ref={btRef} />
 		</SafeAreaView>
 	);
 };
