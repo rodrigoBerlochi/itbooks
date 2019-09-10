@@ -130,7 +130,6 @@ const Home = () => {
 									key={search}
 									placeholder={'Search your book'}
 									action={console.warn}
-									animated={headerX}
 									style={{
 										justifyContent: 'center',
 										alignSelf: 'center',
@@ -170,7 +169,7 @@ const Home = () => {
 						showsVerticalScrollIndicator={false}
 						numColumns={NUMBER_OF_COLUMNS}
 						ItemSeparatorComponent={itemSeparator}
-						data={['Recents', 'Filters', 'Options', 'Downloaded Books']}
+						data={['Options', 'Filters', 'Fav. books', 'Downloaded Books']}
 						keyExtractor={item => item}
 						renderItem={OptionListItem}
 						getItemLayout={getItemLayout}

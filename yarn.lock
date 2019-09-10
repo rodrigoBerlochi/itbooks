@@ -617,7 +617,7 @@
     core-js "^2.6.5"
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.5.5":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
   integrity sha512-28QvEGyQyNkB0/m2B4FU7IEZGK2NUrcMtT6BZEFALTguLk+AUT6ofsHtPk5QyjAdUkpMJ+/Em+quwz4HOt30AQ==
@@ -4447,6 +4447,11 @@ mem@^4.0.0:
     mimic-fn "^2.0.0"
     p-is-promise "^2.0.0"
 
+memoize-one@^5.0.5:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
+  integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
+
 merge-stream@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/merge-stream/-/merge-stream-1.0.1.tgz#4041202d508a342ba00174008df0c251b8c135e1"
@@ -5492,7 +5497,7 @@ prop-types@15.5.8:
   dependencies:
     fbjs "^0.8.9"
 
-prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -5562,7 +5567,7 @@ react-devtools-core@^3.6.3:
     shell-quote "^1.6.1"
     ws "^3.3.1"
 
-react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is@^16.9.0:
+react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
@@ -5573,6 +5578,15 @@ react-native-animatable@^1.1.0:
   integrity sha512-rmah3KQ63ft8DxkzFUwJSuZeq+oSYwldoGF4DTOR5WM2WR5wiWLgBAtrAHlI3Di3by323uOR21s+MlqPcHz2Kw==
   dependencies:
     prop-types "^15.5.10"
+
+react-native-color@0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/react-native-color/-/react-native-color-0.0.10.tgz#9cbc0da191c67ae4fc3a04bef7bc54a685784c7d"
+  integrity sha512-MrYIaWH/fiRXBhfJBVG7vtNF5cQQKg1rK16pU8xtlKne2Ipu+Inki1Gb/oFvaOu+zNXb5/6tss467k8zYIvMwA==
+  dependencies:
+    prop-types "^15.6.0"
+    react-native-slider "^0.11.0"
+    tinycolor2 "^1.4.1"
 
 react-native-fast-image@^7.0.2:
   version "7.0.2"
@@ -5620,22 +5634,29 @@ react-native-safe-area-view@^0.14.6:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
-react-native-screens@^2.0.0-alpha.2:
-  version "2.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.0.0-alpha.2.tgz#38ec2522a40618139461862cf8e911ced6c89a92"
-  integrity sha512-BxLQOUlXRu+dlYWFZNI1ZjpAiWGLpl/gTCDKDumDdPnu41TdMh4cXDQgN5JFCJNwtXzLJrc3ay5MJ5mzollXLg==
+react-native-screens@^2.0.0-alpha.3:
+  version "2.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.0.0-alpha.3.tgz#af86f265b2fb4293b626cf4396db7743de5a54af"
+  integrity sha512-SA3uGrc3UM1V9y6gfVU1UPf1a3dMyQCj3p5J7y6g81Of8rV5Pc34s6fWzOKNAWgOiviAktZB1z7Jngdl7+acZg==
   dependencies:
     debounce "^1.2.0"
+
+react-native-slider@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-slider/-/react-native-slider-0.11.0.tgz#b68a0bc43c8422b24cd57947cc5ac2bcdb58fadc"
+  integrity sha512-jV9K87eu9uWr0uJIyrSpBLnCKvVlOySC2wynq9TFCdV9oGgjt7Niq8Q1A8R8v+5GHsuBw/s8vEj1AAkkUi+u+w==
+  dependencies:
+    prop-types "^15.5.6"
 
 react-native-text-size@^2.0.4:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-native-text-size/-/react-native-text-size-2.1.1.tgz#e26823c4504576964acc258db44009df81189332"
   integrity sha512-dkzmfFiKY4iwk73cvgrbUZ5HFB8ZdOFErRVhDWKBNxML/59dDkzTITBaZ8GKwsfGxNHKOXdHD2JdOoPRwAE+yQ==
 
-react-native-ui-lib@^3.36.0:
-  version "3.36.0"
-  resolved "https://registry.yarnpkg.com/react-native-ui-lib/-/react-native-ui-lib-3.36.0.tgz#a940109bdf5872cdd39668d96a3df8141e1370a9"
-  integrity sha512-7Sjp8qMZ5fmAQrB4GOtugFf1M8RUxvmADuzlQrHWNE8rILKK80c5+uGy7cJKXJZE4ClirwI5WJDTvIP4cKfH+w==
+react-native-ui-lib@^3.37.2:
+  version "3.37.2"
+  resolved "https://registry.yarnpkg.com/react-native-ui-lib/-/react-native-ui-lib-3.37.2.tgz#cbbb658790d9beb71313c3a5cbc9349f2c442a00"
+  integrity sha512-vb9dhAh4P+lBHrtV8c6E35oZLs2OCc/1Ac6F3YG7CWOueW2afVGJEJxNK0bWIAnK/EBiU/De+CCov/QtK8LtcA==
   dependencies:
     "@react-native-community/blur" "^3.3.1"
     babel-plugin-transform-inline-environment-variables "^0.0.2"
@@ -5643,8 +5664,10 @@ react-native-ui-lib@^3.36.0:
     commons-validator-js "^1.0.237"
     hoist-non-react-statics "^3.0.0"
     lodash "^4.0.0"
+    memoize-one "^5.0.5"
     prop-types "^15.5.10"
     react-native-animatable "^1.1.0"
+    react-native-color "0.0.10"
     react-native-gesture-handler "1.3.0"
     react-native-interactable "1.0.0"
     react-native-reanimated "1.1.0"
@@ -5696,17 +5719,17 @@ react-native@0.61.0-rc.2:
     stacktrace-parser "^0.1.3"
     whatwg-fetch "^3.0.0"
 
-react-redux@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.1.0.tgz#72af7cf490a74acdc516ea9c1dd80e25af9ea0b2"
-  integrity sha512-hyu/PoFK3vZgdLTg9ozbt7WF3GgX5+Yn3pZm5/96/o4UueXA+zj08aiSC9Mfj2WtD1bvpIb3C5yvskzZySzzaw==
+react-redux@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.1.1.tgz#ce6eee1b734a7a76e0788b3309bf78ff6b34fa0a"
+  integrity sha512-QsW0vcmVVdNQzEkrgzh2W3Ksvr8cqpAv5FhEk7tNEft+5pp7rXxAudTz3VOPawRkLIepItpkEIyLcN/VVXzjTg==
   dependencies:
-    "@babel/runtime" "^7.4.5"
+    "@babel/runtime" "^7.5.5"
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
-    react-is "^16.8.6"
+    react-is "^16.9.0"
 
 react-refresh@^0.4.0:
   version "0.4.0"
@@ -5786,10 +5809,10 @@ realpath-native@^1.1.0:
   dependencies:
     util.promisify "^1.0.0"
 
-reanimated-bottom-sheet@^1.0.0-alpha.13:
-  version "1.0.0-alpha.13"
-  resolved "https://registry.yarnpkg.com/reanimated-bottom-sheet/-/reanimated-bottom-sheet-1.0.0-alpha.13.tgz#15a585ced256dd9d3c8450016a5acb263e29dcb9"
-  integrity sha512-RuZ2riqZiWhSNDOpKmOD7JYtDS2ygTAPCDEQ9qVmBsQ/1RuJ1sh8WZRWuqdNFqExG8u2ZCj/dGg5hPAS1CtU5Q==
+reanimated-bottom-sheet@^1.0.0-alpha.14:
+  version "1.0.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/reanimated-bottom-sheet/-/reanimated-bottom-sheet-1.0.0-alpha.14.tgz#2df541b1cfd589cd8e48abab71510a1403aef9a7"
+  integrity sha512-ytoh/N8kU1Dd+r+N7uapRR7GfqJnn4dV3Oi7gqz4lyGmgjB1QGGL6eFOVRGuaKx5xPfb3r9s6JXltvO9XxBj2Q==
 
 recyclerlistview@^2.0.12:
   version "2.0.12"
@@ -6685,6 +6708,11 @@ time-stamp@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/time-stamp/-/time-stamp-1.1.0.tgz#764a5a11af50561921b133f3b44e618687e0f5c3"
   integrity sha1-dkpaEa9QVhkhsTPztE5hhofg9cM=
+
+tinycolor2@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
+  integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
 
 tmp@0.0.33, tmp@^0.0.33:
   version "0.0.33"
