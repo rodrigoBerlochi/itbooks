@@ -4,7 +4,7 @@ export interface Book {
 	readonly image?: string;
 	readonly description?: string;
 	readonly bookInfoLink?: string;
-	readonly pdfLink?: string;
+	readonly downloadLinks?: string[];
 	readonly size?: string;
 	readonly pages?: number;
 	readonly year?: number;

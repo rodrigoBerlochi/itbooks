@@ -56,7 +56,7 @@ const fetchBookEpic$: RootEpic = (action$, store$, { scrapper }) =>
 	action$.pipe(
 		filter(isActionOf(fetchBook.request)),
 		switchMap(({ payload }) =>
-			from(scrapper.searchBook(payload)).pipe(
+			from(scrapper.fetchBook(payload)).pipe(
 				map(data => fetchBook.success(JSON.parse((data as unknown) as string))),
 				catchError(
 					pipe(

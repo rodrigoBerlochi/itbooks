@@ -11,7 +11,7 @@ interface IHeader {
 export const Header: React.FC<IHeader> = React.memo(
 	({ action, headerText }) => {
 		return (
-			<View marginL-20 row>
+			<View  paddingL-20 row>
 				<TouchableOpacity onPress={action}>
 					<Icon size={40} name={'md-close'} />
 				</TouchableOpacity>

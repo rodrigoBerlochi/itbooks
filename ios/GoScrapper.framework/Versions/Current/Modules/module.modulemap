@@ -1,0 +1,8 @@
+framework module "GoScrapper" {
+	header "ref.h"
+    header "GoScrapper.objc.h"
+    header "Universe.objc.h"
+    header "GoScrapper.h"
+
+    export *
+}

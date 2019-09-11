@@ -51,6 +51,25 @@ public class ScrapperModule extends ReactContextBaseJavaModule {
         threadPool.execute(fn);
     }
 
+    @ReactMethod
+    @SuppressWarnings("unused")
+    public void fetchBook(String page, Promise promise) {
+        Runnable fn = () -> {
+            byte[] data = GoScrapper.fetchBook(page);
+            String result = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Log.d(NAME, new String(data, StandardCharsets.UTF_8));
+                result = new String(data, StandardCharsets.UTF_8);
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                Log.d(NAME, new String(data, Charset.forName("UTF-8")));
+                result = new String(data, Charset.forName("UTF-8"));
+            }
+            promise.resolve(result);
+        };
+        threadPool.execute(fn);
+    }
+
     @Nonnull
     @Override
     public String getName() {

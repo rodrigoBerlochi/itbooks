@@ -25,11 +25,28 @@ RCT_REMAP_METHOD(fetchQueueBooks,
 {
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     RCTLogInfo(@"Scrapping books with page number %@", page);
-
+    
     NSString *data = [[NSString alloc] initWithData:GoScrapperFetchQueueBooks([page longValue])
                                            encoding:NSASCIIStringEncoding];
     
     RCTLogInfo(@"Scrapped books");
+    
+    resolve(data);
+  });
+}
+
+RCT_REMAP_METHOD(fetchBook,
+                 page:(nonnull NSString *)page
+                 fetchBookWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    RCTLogInfo(@"Scrapping boos with page %@", page);
+  
+    NSString *data = [[NSString alloc] initWithData:GoScrapperFetchBook(page)
+                                           encoding:NSASCIIStringEncoding];
+    
+    RCTLogInfo(@"Scrapped book");
     
     resolve(data);
   });

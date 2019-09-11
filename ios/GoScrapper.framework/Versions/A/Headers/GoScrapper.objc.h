@@ -24,7 +24,8 @@
 @property (nonatomic) NSString* _Nonnull title;
 @property (nonatomic) NSString* _Nonnull image;
 @property (nonatomic) NSString* _Nonnull description;
-@property (nonatomic) NSString* _Nonnull pdf;
+@property (nonatomic) NSString* _Nonnull bookInfoLink;
+@property (nonatomic) NSString* _Nonnull pdfLink;
 @property (nonatomic) NSString* _Nonnull size;
 @property (nonatomic) long pages;
 @property (nonatomic) long year;
@@ -45,6 +46,8 @@
 // skipped method Books.AddBook with unsupported parameter or return types
 
 @end
+
+FOUNDATION_EXPORT NSData* _Nullable GoScrapperFetchBook(NSString* _Nullable page);
 
 FOUNDATION_EXPORT NSData* _Nullable GoScrapperFetchQueueBooks(long page);
 
