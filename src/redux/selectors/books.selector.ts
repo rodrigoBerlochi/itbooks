@@ -9,6 +9,9 @@ export const hasError = (state: RootState): boolean =>
 
 export const books = (state: RootState): Book[] => state.books.mainBooks.books;
 
+export const getBookByPosition = (state: RootState, position: number): Book =>
+	state.books.mainBooks.books[position] || {};
+
 export const isSearching = (state: RootState): boolean =>
 	state.books.searchBooks.fetching;
 

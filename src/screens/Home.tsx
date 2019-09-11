@@ -2,15 +2,21 @@ import {
 	AnimatedIcon,
 	AnimatedList,
 	AnimatedView,
-	BottomSheet,
 	OptionListItem,
 	SearchComponent,
 } from '@components/index';
 import { useReduxAction, useReduxState } from '@hooks/use-redux';
+import { useNavigation } from '@react-navigation/core';
 import { fetchQueueBooks } from '@redux/actions';
 import { books as getBooks } from '@redux/selectors/';
-import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
+import { Dimensions, FlatList, StyleSheet } from 'react-native';
 import Animated, { Transition, Transitioning } from 'react-native-reanimated';
 import { Colors, Constants, Text, View } from 'react-native-ui-lib';
 
@@ -32,36 +38,51 @@ const getItemLayout = (_: any, index: number) => ({
 const itemSeparator = () => <View style={styles.separator} />;
 
 const Home = () => {
-	const btRef = useRef(null);
 	const refHeader = useRef(new Value(0));
+	const refList = useRef(null);
 	const transitionRef = useRef(null);
 	const [search, setSearch] = useState<boolean>(false);
 	const books = useReduxState(getBooks);
 	const fetchBooks = useReduxAction(fetchQueueBooks.request);
+	const navigation = useNavigation();
+	const navigate = useCallback(data => {
+		navigation.navigate('Book', data);
+	}, []);
+	const scrollToTop = useCallback(() => {
+		(refList.current as any).scrollToTop();
+	}, [refList.current]);
 
 	useEffect(() => {
 		fetchBooks();
 	}, []);
 
-	const transition = (
-		<Transition.Sequence>
-			<Transition.Out
-				type={'slide-left'}
-				durationMs={200}
-				interpolation={'easeIn'}
-			/>
-			<Transition.Change interpolation={'easeInOut'} />
-			<Transition.Together>
-				<Transition.In
-					type={'slide-right'}
+	const transition = useMemo(
+		() => (
+			<Transition.Sequence>
+				<Transition.Out
+					type={'slide-left'}
 					durationMs={200}
-					interpolation={'easeOut'}
-					propagation={'left'}
+					interpolation={'easeIn'}
 				/>
-				<Transition.In type={'fade'} durationMs={50} delayMs={50} />
-			</Transition.Together>
-		</Transition.Sequence>
+				<Transition.Change interpolation={'easeInOut'} />
+				<Transition.Together>
+					<Transition.In
+						type={'slide-right'}
+						durationMs={200}
+						interpolation={'easeOut'}
+						propagation={'left'}
+					/>
+					<Transition.In type={'fade'} durationMs={50} delayMs={50} />
+				</Transition.Together>
+			</Transition.Sequence>
+		),
+		[],
 	);
+
+	const iconSearchAction = useCallback(() => {
+		(transitionRef.current as any).animateNextTransition();
+		setSearch(s => !s);
+	}, [search]);
 
 	const headerOpacity = refHeader.current.interpolate({
 		inputRange: [-100, 0, 100, 101],
@@ -88,8 +109,8 @@ const Home = () => {
 	});
 
 	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
-			<View flex>
+		<>
+			<View style={{ backgroundColor: '#FFF' }} flex>
 				<View paddingL-24>
 					<AnimatedView
 						row
@@ -145,15 +166,8 @@ const Home = () => {
 							)}
 						</Transitioning.View>
 						<AnimatedIcon
-							onPress={() => {
-								transitionRef.current.animateNextTransition();
-								setSearch(s => !s);
-							}}
-							style={{
-								justifyContent: 'center',
-								alignSelf: 'center',
-								opacity: headerOpacity,
-							}}
+							onPress={iconSearchAction}
+							style={[styles.animatedIcon, { opacity: headerOpacity }]}
 							name={!search ? 'md-search' : 'md-close'}
 						/>
 					</AnimatedView>
@@ -171,30 +185,32 @@ const Home = () => {
 						showsVerticalScrollIndicator={false}
 						numColumns={NUMBER_OF_COLUMNS}
 						ItemSeparatorComponent={itemSeparator}
-						data={['Options', 'Filters', 'Fav. books', 'Downloaded Books']}
+						data={['Options', 'Filters', 'Fav', 'Downloaded']}
 						keyExtractor={item => item}
-						renderItem={OptionListItem}
+						renderItem={props => <OptionListItem {...props} />}
 						getItemLayout={getItemLayout}
 						renderToHardwareTextureAndroid
 						shouldRasterizeIOS
 					/>
 				</AnimatedView>
 				<AnimatedView flex style={{ marginTop: listY }} paddingH-24>
-					<Text text40>Recently Added</Text>
+					<Text onPress={scrollToTop} text40>
+						Recently Added
+					</Text>
 					<View flex style={{ backgroundColor: '#FFF' }} marginT-20>
 						{books.length > 0 && (
 							<AnimatedList
+								ref={refList}
 								data={books}
 								fetchMore={fetchBooks}
 								refScroll={refHeader}
-								onItemPress={() => btRef.current.open()}
+								onItemPress={navigate}
 							/>
 						)}
 					</View>
 				</AnimatedView>
 			</View>
-			<BottomSheet ref={btRef} />
-		</SafeAreaView>
+		</>
 	);
 };
 
@@ -202,6 +218,10 @@ const styles = StyleSheet.create({
 	separator: {
 		borderBottomWidth: StyleSheet.hairlineWidth,
 		borderColor: Colors.dark60,
+	},
+	animatedIcon: {
+		justifyContent: 'center',
+		alignSelf: 'center',
 	},
 });
 
