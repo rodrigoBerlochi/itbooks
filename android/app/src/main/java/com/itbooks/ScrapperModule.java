@@ -1,6 +1,7 @@
 package com.itbooks;
 
 import android.os.Build;
+import android.os.Environment;
 import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
@@ -66,6 +67,30 @@ public class ScrapperModule extends ReactContextBaseJavaModule {
                 result = new String(data, Charset.forName("UTF-8"));
             }
             promise.resolve(result);
+        };
+        threadPool.execute(fn);
+    }
+
+    @ReactMethod
+    @SuppressWarnings("unused")
+    public void downloadBook(String url, String fileName, Promise promise) {
+        Runnable fn = () -> {
+            String sdPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+            Log.d("DOWNLOAD BOOK", sdPath);
+
+            try {
+                String extension = url.contains("pdf") ? ".pdf" : ".epub";
+                GoScrapper.downloadBook(
+                        url,
+                        sdPath.concat("/" + fileName.trim() + extension)
+                );
+                Log.d("DOWNLOAD BOOK SUCCESS", "jeje");
+                promise.resolve(true);
+            } catch (Exception e) {
+                Log.d("DOWNLOAD BOOK ERROR", e.toString());
+                promise.reject(e);
+            }
         };
         threadPool.execute(fn);
     }

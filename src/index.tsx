@@ -20,6 +20,7 @@ function NavRouter() {
 					/>
 					<Stack.Screen
 						options={{
+							gestureEnabled: true,
 							gestureDirection: 'horizontal',
 						}}
 						name={'Book'}

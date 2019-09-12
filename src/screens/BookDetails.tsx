@@ -3,8 +3,15 @@ import { useReduxAction, useReduxState } from '@hooks/use-redux';
 import { useNavigation, useRoute } from '@react-navigation/core';
 import { fetchBook } from '@redux/actions';
 import { fetchedBook, isFetchingBook } from '@redux/selectors';
+import { downloadBook } from '@utils/downloadBook';
 import React, { useCallback, useEffect } from 'react';
-import { ActivityIndicator, Alert, ScrollView, StyleSheet } from 'react-native';
+import {
+	ActivityIndicator,
+	Alert,
+	Platform,
+	ScrollView,
+	StyleSheet,
+} from 'react-native';
 import { Button, Colors, Text, View } from 'react-native-ui-lib';
 
 const BookDetails: React.FC = React.memo(() => {
@@ -14,8 +21,10 @@ const BookDetails: React.FC = React.memo(() => {
 	const isFetching = useReduxState(isFetchingBook);
 	const { goBack } = useNavigation();
 	const {
-		item: { title, bookInfoLink, image },
-	} = useRoute().params;
+		params: {
+			item: { title, bookInfoLink, image },
+		},
+	} = useRoute<any>();
 
 	useEffect(() => {
 		fetchBookAction(bookInfoLink);
@@ -27,12 +36,23 @@ const BookDetails: React.FC = React.memo(() => {
 			'Download types',
 			'Available formats',
 			[
-				{ text: 'PDF', onPress: () => null },
-				{ text: 'ePub', onPress: () => null },
+				...((book.downloadLinks &&
+					book.downloadLinks.map(link => ({
+						text: link.includes('pdf') ? 'PDF' : 'ePub',
+						onPress: () => downloadBook(link, title),
+						style: 'destructive',
+					}))) as any),
+				{
+					...(Platform.OS === 'ios' && {
+						text: 'Cancel',
+						onPress: () => null,
+						style: 'cancel',
+					}),
+				},
 			],
 			{ cancelable: true },
 		);
-	}, [book.formats]);
+	}, [book.downloadLinks]);
 
 	return (
 		<View flex style={{ backgroundColor: '#FFF' }}>
@@ -49,9 +69,7 @@ const BookDetails: React.FC = React.memo(() => {
 						<View row>
 							<FastImage uri={image} style={{ width: 150, height: 180 }} />
 							<View flex>
-								<Text text80 style={{ flex: 0.75 }} numberOfLines={2}>
-									{title}
-								</Text>
+								<Text text80 marginB-15>{title}</Text>
 								<Text text80>Author: {book.author}</Text>
 								<Text text80>ISBN: {book.isbn}</Text>
 								<Text text80>Size: {book.size}</Text>
@@ -87,16 +105,12 @@ const BookDetails: React.FC = React.memo(() => {
 export { BookDetails as default };
 
 const styles = StyleSheet.create({
-	container: {
-		backgroundColor: 'green',
-	},
 	bookHeader: {
 		paddingHorizontal: 16,
 	},
 	descriptionContainer: {
 		paddingHorizontal: 16,
 		paddingVertical: 24,
-		backgroundColor: Colors.dark80,
 	},
 	inputContainer: {
 		paddingHorizontal: 24,

@@ -25,7 +25,8 @@
 @property (nonatomic) NSString* _Nonnull image;
 @property (nonatomic) NSString* _Nonnull description;
 @property (nonatomic) NSString* _Nonnull bookInfoLink;
-@property (nonatomic) NSString* _Nonnull pdfLink;
+// skipped field Book.DownloadLinks with unsupported type: []string
+
 @property (nonatomic) NSString* _Nonnull size;
 @property (nonatomic) long pages;
 @property (nonatomic) long year;
@@ -46,6 +47,8 @@
 // skipped method Books.AddBook with unsupported parameter or return types
 
 @end
+
+FOUNDATION_EXPORT BOOL GoScrapperDownloadBook(NSString* _Nullable url, NSString* _Nullable pathName, NSError* _Nullable* _Nullable error);
 
 FOUNDATION_EXPORT NSData* _Nullable GoScrapperFetchBook(NSString* _Nullable page);
 
