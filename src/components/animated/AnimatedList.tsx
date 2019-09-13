@@ -67,7 +67,7 @@ export const AnimatedList = React.memo<IList>(
 			const layoutProvider = useRef<LayoutProvider>(
 				new LayoutProvider(
 					_ => 0,
-					(type, dim) => {
+					(_, dim) => {
 						dim.width = itemWidth;
 						dim.height = itemHeight + 30;
 					},
@@ -77,9 +77,7 @@ export const AnimatedList = React.memo<IList>(
 
 			useImperativeHandle(ref, () => ({
 				scrollToTop: () => {
-					if (refList.current) {
-						(refList.current as any).getNode().scrollToOffset(0, 0, true);
-					}
+					(refList.current as any).getNode().scrollToOffset(0, 0, true);
 				},
 			}));
 
@@ -99,6 +97,7 @@ export const AnimatedList = React.memo<IList>(
 					shouldRasterizeIOS={true}
 					showsVerticalScrollIndicator={false}
 					scrollThrottle={16}
+					style={{ marginTop: 25 }}
 					onScroll={Animated.event([
 						{
 							nativeEvent: {

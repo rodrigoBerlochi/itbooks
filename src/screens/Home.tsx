@@ -197,17 +197,15 @@ const Home = () => {
 					<Text onPress={scrollToTop} text40>
 						Recently Added
 					</Text>
-					<View flex style={{ backgroundColor: '#FFF' }} marginT-20>
-						{books.length > 0 && (
-							<AnimatedList
-								ref={refList}
-								data={books}
-								fetchMore={fetchBooks}
-								refScroll={refHeader}
-								onItemPress={navigate}
-							/>
-						)}
-					</View>
+					{books.length > 0 && (
+						<AnimatedList
+							ref={refList}
+							data={books}
+							fetchMore={fetchBooks}
+							refScroll={refHeader}
+							onItemPress={navigate}
+						/>
+					)}
 				</AnimatedView>
 			</View>
 		</>
