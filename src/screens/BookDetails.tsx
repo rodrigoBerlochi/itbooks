@@ -4,7 +4,13 @@ import { useNavigation, useRoute } from '@react-navigation/core';
 import { fetchBook } from '@redux/actions';
 import { fetchedBook, isFetchingBook } from '@redux/selectors';
 import { downloadBook } from '@utils/downloadBook';
-import React, { useCallback, useEffect } from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+} from 'react';
 import {
 	ActivityIndicator,
 	Alert,
@@ -12,9 +18,11 @@ import {
 	ScrollView,
 	StyleSheet,
 } from 'react-native';
+import { Transition, Transitioning } from 'react-native-reanimated';
 import { Button, Colors, Text, View } from 'react-native-ui-lib';
 
 const BookDetails: React.FC = React.memo(() => {
+	const transitionRef = useRef(null);
 	const fetchBookAction = useReduxAction(fetchBook.request);
 	const cancelFetchBook = useReduxAction(fetchBook.cancel);
 	const book = useReduxState(fetchedBook);
@@ -30,6 +38,35 @@ const BookDetails: React.FC = React.memo(() => {
 		fetchBookAction(bookInfoLink);
 		return () => cancelFetchBook();
 	}, []);
+
+	useLayoutEffect(() => {
+		if (Object.keys(book).length > 2) {
+			(transitionRef.current as any).animateNextTransition();
+		}
+	}, [book]);
+
+	const transition = useMemo(
+		() => (
+			<Transition.Sequence>
+				<Transition.Out
+					type={'fade'}
+					durationMs={400}
+					interpolation={'easeIn'}
+				/>
+				<Transition.Change />
+				<Transition.Together>
+					<Transition.In
+						type={'scale'}
+						durationMs={400}
+						interpolation={'easeInOut'}
+						propagation={'top'}
+					/>
+					<Transition.In type={'slide-bottom'} durationMs={200} delayMs={200} />
+				</Transition.Together>
+			</Transition.Sequence>
+		),
+		[],
+	);
 
 	const downloadAction = useCallback(() => {
 		Alert.alert(
@@ -64,12 +101,18 @@ const BookDetails: React.FC = React.memo(() => {
 					color={Colors.red20}
 				/>
 			) : (
-				<>
+				<Transitioning.View
+					ref={transitionRef as any}
+					style={{ flexGrow: 1, justifyContent: 'center' }}
+					transition={transition}
+				>
 					<View column marginT-10>
 						<View row>
 							<FastImage uri={image} style={{ width: 150, height: 180 }} />
 							<View flex>
-								<Text text80 marginB-15>{title}</Text>
+								<Text text80 marginB-15>
+									{title}
+								</Text>
 								<Text text80>Author: {book.author}</Text>
 								<Text text80>ISBN: {book.isbn}</Text>
 								<Text text80>Size: {book.size}</Text>
@@ -96,7 +139,7 @@ const BookDetails: React.FC = React.memo(() => {
 							<Text text80>{book.description}</Text>
 						</View>
 					</ScrollView>
-				</>
+				</Transitioning.View>
 			)}
 		</View>
 	);
