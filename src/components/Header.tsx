@@ -9,16 +9,14 @@ interface IHeader {
 }
 
 export const Header: React.FC<IHeader> = React.memo(
-	({ action, headerText }) => {
-		return (
-			<View  paddingL-20 row>
-				<TouchableOpacity onPress={action}>
-					<Icon size={40} name={'md-close'} />
-				</TouchableOpacity>
-				<Text numberOfLines={1} marginL-40 marginR-60 text30>
-					{headerText}
-				</Text>
-			</View>
-		);
-	},
+	({ action, headerText }) => (
+		<View paddingL-20 row>
+			<TouchableOpacity onPress={action}>
+				<Icon size={40} name={'md-close'} />
+			</TouchableOpacity>
+			<Text numberOfLines={1} marginL-40 marginR-60 text30>
+				{headerText}
+			</Text>
+		</View>
+	),
 );
