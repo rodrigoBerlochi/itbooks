@@ -4,7 +4,7 @@
 
 IT Books its your app for reading and searching more than 8k books about IT, in which you can save it or download them for reading after or while offline.
 
-This app is made with this stack technology:  
+This app is made with this technology stack:  
 - Golang (core of the app)
 - Typescript
 - React-Native
