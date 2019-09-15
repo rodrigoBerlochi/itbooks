@@ -109,106 +109,98 @@ const Home = () => {
 	});
 
 	return (
-		<>
-			<View style={{ backgroundColor: '#FFF' }} flex>
-				<View paddingL-24>
-					<AnimatedView
-						row
-						spread
-						bottom
-						paddingR-24
-						style={[styles.separator]}
+		<View style={{ backgroundColor: '#FFF' }} flex>
+			<View paddingL-24>
+				<AnimatedView row spread bottom paddingR-24 style={[styles.separator]}>
+					<Transitioning.View
+						ref={transitionRef}
+						transition={transition}
+						style={{
+							flexGrow: 1,
+							justifyContent: 'center',
+						}}
 					>
-						<Transitioning.View
-							ref={transitionRef}
-							transition={transition}
-							style={{
-								flexGrow: 1,
-								justifyContent: 'center',
-							}}
-						>
-							{!search ? (
-								<AnimatedText
-									key={search}
-									style={[
-										{
-											lineHeight: 70,
-											fontFamily: Constants.isAndroid
-												? 'sans-serif-thin'
-												: undefined,
-											fontSize: titleFontSize,
-											fontWeight: '100',
-											transform: [
-												{
-													translateX: headerX,
-												},
-											],
-										},
-									]}
-								>
-									IT Books
-								</AnimatedText>
-							) : (
-								<AnimatedTextInput
-									key={search}
-									placeholder={'Search your book'}
-									action={console.warn}
-									style={{
-										justifyContent: 'center',
-										alignSelf: 'center',
+						{!search ? (
+							<AnimatedText
+								key={search}
+								style={[
+									{
+										lineHeight: 70,
+										fontFamily: Constants.isAndroid
+											? 'sans-serif-thin'
+											: undefined,
+										fontSize: titleFontSize,
+										fontWeight: '100',
 										transform: [
 											{
 												translateX: headerX,
 											},
 										],
-									}}
-								/>
-							)}
-						</Transitioning.View>
-						<AnimatedIcon
-							onPress={iconSearchAction}
-							style={[styles.animatedIcon, { opacity: headerOpacity }]}
-							name={!search ? 'md-search' : 'md-close'}
-						/>
-					</AnimatedView>
-				</View>
-				<AnimatedView
-					paddingL-24
-					style={{
-						opacity: headerOpacity,
-					}}
-				>
-					<FlatList
-						bounces={false}
-						horizontal={false}
-						showsHorizontalScrollIndicator={false}
-						showsVerticalScrollIndicator={false}
-						numColumns={NUMBER_OF_COLUMNS}
-						ItemSeparatorComponent={itemSeparator}
-						data={['Options', 'Filters', 'Fav', 'Downloaded']}
-						keyExtractor={item => item}
-						renderItem={props => <OptionListItem {...props} />}
-						getItemLayout={getItemLayout}
-						renderToHardwareTextureAndroid
-						shouldRasterizeIOS
+									},
+								]}
+							>
+								IT Books
+							</AnimatedText>
+						) : (
+							<AnimatedTextInput
+								key={search}
+								placeholder={'Search your book'}
+								action={console.warn}
+								style={{
+									justifyContent: 'center',
+									alignSelf: 'center',
+									transform: [
+										{
+											translateX: headerX,
+										},
+									],
+								}}
+							/>
+						)}
+					</Transitioning.View>
+					<AnimatedIcon
+						onPress={iconSearchAction}
+						style={[styles.animatedIcon, { opacity: headerOpacity }]}
+						name={!search ? 'md-search' : 'md-close'}
 					/>
 				</AnimatedView>
-				<AnimatedView flex style={{ marginTop: listY }} paddingH-24>
-					<Text onPress={scrollToTop} text40>
-						Recently Added
-					</Text>
-					{books.length > 0 && (
-						<AnimatedList
-							ref={refList}
-							data={books}
-							fetchMore={fetchBooks}
-							refScroll={refHeader}
-							onItemPress={navigate}
-						/>
-					)}
-				</AnimatedView>
 			</View>
-		</>
+			<AnimatedView
+				paddingL-24
+				style={{
+					opacity: headerOpacity,
+				}}
+			>
+				<FlatList
+					bounces={false}
+					horizontal={false}
+					showsHorizontalScrollIndicator={false}
+					showsVerticalScrollIndicator={false}
+					numColumns={NUMBER_OF_COLUMNS}
+					ItemSeparatorComponent={itemSeparator}
+					data={['Options', 'Filters', 'Fav', 'Downloaded']}
+					keyExtractor={item => item}
+					renderItem={props => <OptionListItem {...props} />}
+					getItemLayout={getItemLayout}
+					renderToHardwareTextureAndroid
+					shouldRasterizeIOS
+				/>
+			</AnimatedView>
+			<AnimatedView flex style={{ marginTop: listY }} paddingH-24>
+				<Text onPress={scrollToTop} text40>
+					Recently Added
+				</Text>
+				{books.length > 0 && (
+					<AnimatedList
+						ref={refList}
+						data={books}
+						fetchMore={fetchBooks}
+						refScroll={refHeader}
+						onItemPress={navigate}
+					/>
+				)}
+			</AnimatedView>
+		</View>
 	);
 };
 
@@ -223,4 +215,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default Home;
+export { Home as default };

@@ -1,5 +1,11 @@
 import { Book } from '@interfaces/';
-import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useImperativeHandle,
+	useRef,
+	useState,
+} from 'react';
 import { LayoutAnimation } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Constants, Text, View } from 'react-native-ui-lib';
@@ -88,11 +94,30 @@ export const AnimatedList = React.memo<IList>(
 				setBooks(newData);
 			}, [data]);
 
+			const renderItem = useCallback(
+				(_: any, item: PartialBook, index: number) => {
+					return (
+						<AnimatedPress itemAction={() => onItemPress({ index, item })}>
+							<View marginL-24={index % NUMBER_OF_COLUMNS !== 0}>
+								<View height={itemWidth}>
+									<FastImage style={{ flex: 1 }} uri={item.image} />
+								</View>
+								<View>
+									<Text text70 dark20 numberOfLines={1}>
+										{item.title}
+									</Text>
+								</View>
+							</View>
+						</AnimatedPress>
+					);
+				},
+				[],
+			);
+
 			return (
 				<ReanimatedList
 					ref={refList}
 					bounces={false}
-					renderAheadOffset={250}
 					renderToHardwareTextureAndroid={true}
 					shouldRasterizeIOS={true}
 					showsVerticalScrollIndicator={false}
@@ -112,24 +137,7 @@ export const AnimatedList = React.memo<IList>(
 					onEndReachedThreshold={0.75}
 					layoutProvider={layoutProvider.current}
 					dataProvider={dataProvider.current}
-					rowRenderer={(_: any, item: PartialBook, index: number) => (
-						<AnimatedPress itemAction={() => onItemPress({ index, item })}>
-							<View
-								flex
-								marginL-24={index % NUMBER_OF_COLUMNS !== 0}
-								marginB-24
-							>
-								<View height={itemWidth}>
-									<FastImage style={{ flex: 1 }} uri={item.image} />
-								</View>
-								<View paddingT-2>
-									<Text text70 dark20 numberOfLines={1}>
-										{item.title}
-									</Text>
-								</View>
-							</View>
-						</AnimatedPress>
-					)}
+					rowRenderer={renderItem}
 				/>
 			);
 		},
