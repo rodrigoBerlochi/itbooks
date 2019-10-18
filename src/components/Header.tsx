@@ -1,6 +1,6 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Text, View } from 'react-native-ui-lib';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Text } from 'react-native-ui-kitten';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface IHeader {
@@ -10,13 +10,26 @@ interface IHeader {
 
 export const Header: React.FC<IHeader> = React.memo(
 	({ action, headerText }) => (
-		<View paddingL-20 row>
+		<View style={styles.headerView}>
 			<TouchableOpacity onPress={action}>
 				<Icon size={40} name={'md-close'} />
 			</TouchableOpacity>
-			<Text testID={'headerTextID'} numberOfLines={1} marginL-40 marginR-60 text30>
+			<Text testID={'headerTextID'} numberOfLines={1} style={styles.headerText}>
 				{headerText}
 			</Text>
 		</View>
 	),
 );
+
+const styles = StyleSheet.create({
+	headerView: {
+		paddingLeft: 20,
+		flexDirection: 'row',
+	},
+	headerText: {
+		marginLeft: 40,
+		marginRight: 60,
+		paddingTop: 17,
+		fontSize: 30,
+	},
+});

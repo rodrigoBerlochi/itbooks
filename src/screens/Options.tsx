@@ -1,7 +1,7 @@
 import { Header } from '@components/Header';
 import { useNavigation, useRoute } from '@react-navigation/core';
 import React, { useCallback, useMemo } from 'react';
-import { View } from 'react-native-ui-lib';
+import { Layout } from 'react-native-ui-kitten';
 
 const Options: React.FC = React.memo(({}) => {
 	const navigation = useNavigation();
@@ -14,9 +14,9 @@ const Options: React.FC = React.memo(({}) => {
 	}, []);
 
 	return (
-		<View style={{ flex: 1, backgroundColor: '#FFF' }}>
+		<Layout style={{ flex: 1, backgroundColor: '#FFF' }}>
 			<Header action={goBack} headerText={title} />
-		</View>
+		</Layout>
 	);
 });
 

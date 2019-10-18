@@ -1,8 +1,10 @@
+import { light as lightTheme, mapping } from '@eva-design/eva';
 import { NavigationNativeContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { configureStore } from '@redux/store';
 import React from 'react';
 import { SafeAreaView } from 'react-native';
+import { ApplicationProvider } from 'react-native-ui-kitten';
 import { Provider } from 'react-redux';
 
 const store = configureStore();
@@ -43,6 +45,8 @@ function NavRouter() {
 
 export default () => (
 	<Provider store={store}>
-		<NavRouter />
+		<ApplicationProvider mapping={mapping} theme={lightTheme}>
+			<NavRouter />
+		</ApplicationProvider>
 	</Provider>
 );

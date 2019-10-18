@@ -19,6 +19,7 @@ import {
 	StyleSheet,
 } from 'react-native';
 import { Transition, Transitioning } from 'react-native-reanimated';
+import { Layout } from 'react-native-ui-kitten';
 import { Button, Colors, Text, View } from 'react-native-ui-lib';
 
 const BookDetails: React.FC = React.memo(() => {
@@ -92,7 +93,7 @@ const BookDetails: React.FC = React.memo(() => {
 	}, [book.downloadLinks]);
 
 	return (
-		<View flex style={{ backgroundColor: '#FFF' }}>
+		<Layout style={{ backgroundColor: '#FFF', flex: 1 }}>
 			<Header action={goBack} headerText={'BOOK DETAILS'} />
 			{isFetching ? (
 				<ActivityIndicator
@@ -141,7 +142,7 @@ const BookDetails: React.FC = React.memo(() => {
 					</ScrollView>
 				</Transitioning.View>
 			)}
-		</View>
+		</Layout>
 	);
 });
 

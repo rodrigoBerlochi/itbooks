@@ -1,6 +1,11 @@
+import { light, mapping } from '@eva-design/eva';
 import React from 'react';
 import 'react-native';
 import { render } from 'react-native-testing-library';
+import {
+	ApplicationProvider,
+	ApplicationProviderProps,
+} from 'react-native-ui-kitten';
 import { FastImage } from '../src/components/FastImage';
 import { Header } from '../src/components/Header';
 import { OptionListItem } from '../src/components/OptionListItem';
@@ -14,20 +19,36 @@ jest.mock('@react-navigation/core', () => ({
 
 const NOOP = () => jest.fn();
 
+const Mock: React.FC = ({
+	children,
+}): React.ReactElement<ApplicationProviderProps> => {
+	return (
+		<ApplicationProvider mapping={mapping} theme={light}>
+			{children}
+		</ApplicationProvider>
+	);
+};
+
 describe('COMMON COMPONENTS', () => {
 	it('should render FAST-IMAGE correctly', () => {
 		render(<FastImage uri={''} style={{ flex: 1 }} />);
 	});
 
-	xit('should render OptionListItem correctly', () => {
-		const { getByTestId } = render(<OptionListItem key={''} item={'test'} />);
+	it('should render OptionListItem correctly', () => {
+		const { getByTestId } = render(
+			<Mock>
+				<OptionListItem key={''} item={'test'} />
+			</Mock>,
+		);
 
 		expect(getByTestId('textOptionListItemID').props.children).toEqual('test');
 	});
 
-	xit('header', () => {
+	it('header', () => {
 		const { getByTestId } = render(
-			<Header headerText={'test'} action={NOOP} />,
+			<Mock>
+				<Header headerText={'test'} action={NOOP} />,
+			</Mock>,
 		);
 
 		expect(getByTestId('headerTextID').props.children).toEqual('test');

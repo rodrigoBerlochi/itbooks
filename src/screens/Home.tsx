@@ -2,6 +2,7 @@ import {
 	AnimatedIcon,
 	AnimatedList,
 	AnimatedView,
+	Divider,
 	OptionListItem,
 	SearchComponent,
 } from '@components/index';
@@ -18,7 +19,8 @@ import React, {
 } from 'react';
 import { Dimensions, FlatList, StyleSheet } from 'react-native';
 import Animated, { Transition, Transitioning } from 'react-native-reanimated';
-import { Colors, Constants, Text, View } from 'react-native-ui-lib';
+import { Layout, Text } from 'react-native-ui-kitten';
+import { Colors, Constants, Text as UText, View } from 'react-native-ui-lib';
 
 const { width } = Dimensions.get('screen');
 
@@ -35,15 +37,15 @@ const getItemLayout = (_: any, index: number) => ({
 	index,
 });
 
-const itemSeparator = () => <View style={styles.separator} />;
-
 const Home = () => {
 	const refHeader = useRef(new Value(0));
 	const refList = useRef(null);
 	const transitionRef = useRef(null);
 	const [search, setSearch] = useState<boolean>(false);
 	const books = useReduxState(getBooks);
-	const fetchBooks = useReduxAction(actions.bookActions.fetchQueueBooks.request);
+	const fetchBooks = useReduxAction(
+		actions.bookActions.fetchQueueBooks.request,
+	);
 	const navigation = useNavigation();
 	const navigate = useCallback(data => {
 		navigation.navigate('Book', data);
@@ -103,22 +105,19 @@ const Home = () => {
 	});
 
 	const listY = refHeader.current.interpolate({
-		inputRange: [0, 220],
-		outputRange: [0, -220],
+		inputRange: [0, 175],
+		outputRange: [0, -175],
 		extrapolate: Animated.Extrapolate.CLAMP,
 	});
 
 	return (
-		<View style={{ backgroundColor: '#FFF' }} flex>
+		<Layout style={{ backgroundColor: '#FFF', flex: 1 }}>
 			<View paddingL-24>
 				<AnimatedView row spread bottom paddingR-24 style={[styles.separator]}>
 					<Transitioning.View
 						ref={transitionRef}
 						transition={transition}
-						style={{
-							flexGrow: 1,
-							justifyContent: 'center',
-						}}
+						style={styles.transitionView}
 					>
 						{!search ? (
 							<AnimatedText
@@ -177,7 +176,7 @@ const Home = () => {
 					showsHorizontalScrollIndicator={false}
 					showsVerticalScrollIndicator={false}
 					numColumns={NUMBER_OF_COLUMNS}
-					ItemSeparatorComponent={itemSeparator}
+					ItemSeparatorComponent={Divider}
 					data={['Options', 'Filters', 'Fav', 'Downloaded']}
 					keyExtractor={item => item}
 					renderItem={props => <OptionListItem {...props} />}
@@ -187,9 +186,9 @@ const Home = () => {
 				/>
 			</AnimatedView>
 			<AnimatedView flex style={{ marginTop: listY }} paddingH-24>
-				<Text onPress={scrollToTop} text40>
+				<UText onPress={scrollToTop} text40>
 					Recently Added
-				</Text>
+				</UText>
 				{books.length > 0 && (
 					<AnimatedList
 						ref={refList}
@@ -200,7 +199,7 @@ const Home = () => {
 					/>
 				)}
 			</AnimatedView>
-		</View>
+		</Layout>
 	);
 };
 
@@ -212,6 +211,10 @@ const styles = StyleSheet.create({
 	animatedIcon: {
 		justifyContent: 'center',
 		alignSelf: 'center',
+	},
+	transitionView: {
+		flexGrow: 1,
+		justifyContent: 'center',
 	},
 });
 
