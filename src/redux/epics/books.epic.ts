@@ -52,7 +52,7 @@ const searchBooksEpic$: RootEpic = (action$, store$, { scrapper }) =>
 		),
 	);
 
-const fetchBookEpic$: RootEpic = (action$, store$, { scrapper }) =>
+const fetchBookEpic$: RootEpic = (action$, _, { scrapper }) =>
 	action$.pipe(
 		filter(isActionOf(fetchBook.request)),
 		switchMap(({ payload }) =>

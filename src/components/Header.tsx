@@ -14,7 +14,7 @@ export const Header: React.FC<IHeader> = React.memo(
 			<TouchableOpacity onPress={action}>
 				<Icon size={40} name={'md-close'} />
 			</TouchableOpacity>
-			<Text numberOfLines={1} marginL-40 marginR-60 text30>
+			<Text testID={'headerTextID'} numberOfLines={1} marginL-40 marginR-60 text30>
 				{headerText}
 			</Text>
 		</View>

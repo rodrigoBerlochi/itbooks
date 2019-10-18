@@ -7,7 +7,7 @@ import {
 } from '@components/index';
 import { useReduxAction, useReduxState } from '@hooks/use-redux';
 import { useNavigation } from '@react-navigation/core';
-import { fetchQueueBooks } from '@redux/actions';
+import actions from '@redux/actions';
 import { books as getBooks } from '@redux/selectors/';
 import React, {
 	useCallback,
@@ -43,7 +43,7 @@ const Home = () => {
 	const transitionRef = useRef(null);
 	const [search, setSearch] = useState<boolean>(false);
 	const books = useReduxState(getBooks);
-	const fetchBooks = useReduxAction(fetchQueueBooks.request);
+	const fetchBooks = useReduxAction(actions.bookActions.fetchQueueBooks.request);
 	const navigation = useNavigation();
 	const navigate = useCallback(data => {
 		navigation.navigate('Book', data);

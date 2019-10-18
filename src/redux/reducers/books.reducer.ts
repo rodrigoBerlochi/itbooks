@@ -53,7 +53,7 @@ export const booksReducer = createReducer<IBooksInitialState, RootAction>({
 			error: true,
 		},
 	}))
-	.handleAction(fetchQueueBooks.request, state => ({
+	.handleAction(fetchQueueBooks.cancel, state => ({
 		...state,
 		mainBooks: {
 			...state.mainBooks,
@@ -86,7 +86,7 @@ export const booksReducer = createReducer<IBooksInitialState, RootAction>({
 			error: true,
 		},
 	}))
-	.handleAction(searchBooks.request, state => ({
+	.handleAction(searchBooks.cancel, state => ({
 		...state,
 		searchBooks: {
 			...state.searchBooks,
@@ -98,7 +98,7 @@ export const booksReducer = createReducer<IBooksInitialState, RootAction>({
 		...state,
 		fetchedBook: {
 			fetching: true,
-			error: false, // nullish 3.7
+			error: false,
 		},
 	}))
 	.handleAction(fetchBook.success, (state, { payload }) => ({

@@ -25,6 +25,7 @@ export const OptionListItem = ({ item }: { item: string }) => {
 				...marginFilters,
 				...marginDownBooks,
 			}}
+			testID={'optionListItemTouchableID'}
 			onPress={navigate}
 		>
 			<View
@@ -35,7 +36,7 @@ export const OptionListItem = ({ item }: { item: string }) => {
 				centerV
 				style={{ alignSelf: 'center' }}
 			>
-				<Text text60 red20>
+				<Text testID={'textOptionListItemID'} text60 red20>
 					{item}
 				</Text>
 			</View>

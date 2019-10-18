@@ -1,4 +1,4 @@
-import { fetchBook, fetchQueueBooks, searchBooks } from '../src/redux/actions';
+import actions from '../src/redux/actions';
 
 describe('REDUX ACTIONS', () => {
 	describe('BOOKS QUEUE ACTIONS', () => {
@@ -6,7 +6,9 @@ describe('REDUX ACTIONS', () => {
 			const expectedAction = {
 				type: 'BOOKS_QUEUE_REQUEST',
 			};
-			expect(fetchQueueBooks.request()).toEqual(expectedAction);
+			expect(actions.bookActions.fetchQueueBooks.request()).toEqual(
+				expectedAction,
+			);
 		});
 
 		it('should create success queue action successfully', () => {
@@ -14,21 +16,27 @@ describe('REDUX ACTIONS', () => {
 				type: 'BOOKS_QUEUE_SUCCESS',
 				payload: [],
 			};
-			expect(fetchQueueBooks.success([])).toEqual(expectedAction);
+			expect(actions.bookActions.fetchQueueBooks.success([])).toEqual(
+				expectedAction,
+			);
 		});
 
 		it('should create error queue action successfully', () => {
 			const expectedAction = {
 				type: 'BOOKS_QUEUE_ERROR',
 			};
-			expect(fetchQueueBooks.failure()).toEqual(expectedAction);
+			expect(actions.bookActions.fetchQueueBooks.failure()).toEqual(
+				expectedAction,
+			);
 		});
 
 		it('should create cancel queue action successfully', () => {
 			const expectedAction = {
 				type: 'BOOKS_QUEUE_CANCEL',
 			};
-			expect(fetchQueueBooks.cancel()).toEqual(expectedAction);
+			expect(actions.bookActions.fetchQueueBooks.cancel()).toEqual(
+				expectedAction,
+			);
 		});
 	});
 
@@ -38,7 +46,9 @@ describe('REDUX ACTIONS', () => {
 				type: 'BOOKS_FETCH_ONE_REQUEST',
 				payload: 'TYPESCRIPT GOLANG',
 			};
-			expect(fetchBook.request('TYPESCRIPT GOLANG')).toEqual(expectedAction);
+			expect(
+				actions.bookActions.fetchBook.request('TYPESCRIPT GOLANG'),
+			).toEqual(expectedAction);
 		});
 
 		it('should create success fetch action successfully', () => {
@@ -46,21 +56,21 @@ describe('REDUX ACTIONS', () => {
 				type: 'BOOKS_FETCH_ONE_SUCCESS',
 				payload: {},
 			};
-			expect(fetchBook.success({})).toEqual(expectedAction);
+			expect(actions.bookActions.fetchBook.success({})).toEqual(expectedAction);
 		});
 
 		it('should create error fetch action successfully', () => {
 			const expectedAction = {
 				type: 'BOOKS_FETCH_ONE_ERROR',
 			};
-			expect(fetchBook.failure()).toEqual(expectedAction);
+			expect(actions.bookActions.fetchBook.failure()).toEqual(expectedAction);
 		});
 
 		it('should create cancel fetch action successfully', () => {
 			const expectedAction = {
 				type: 'BOOKS_FETCH_ONE_CANCEL',
 			};
-			expect(fetchBook.cancel()).toEqual(expectedAction);
+			expect(actions.bookActions.fetchBook.cancel()).toEqual(expectedAction);
 		});
 	});
 
@@ -70,7 +80,9 @@ describe('REDUX ACTIONS', () => {
 				type: 'BOOKS_SEARCH_REQUEST',
 				payload: 'TYPESCRIPT GOLANG',
 			};
-			expect(searchBooks.request('TYPESCRIPT GOLANG')).toEqual(expectedAction);
+			expect(
+				actions.bookActions.searchBooks.request('TYPESCRIPT GOLANG'),
+			).toEqual(expectedAction);
 		});
 
 		it('should create success search action successfully', () => {
@@ -78,21 +90,23 @@ describe('REDUX ACTIONS', () => {
 				type: 'BOOKS_SEARCH_SUCCESS',
 				payload: [],
 			};
-			expect(searchBooks.success([])).toEqual(expectedAction);
+			expect(actions.bookActions.searchBooks.success([])).toEqual(
+				expectedAction,
+			);
 		});
 
 		it('should create error search action successfully', () => {
 			const expectedAction = {
 				type: 'BOOKS_SEARCH_ERROR',
 			};
-			expect(searchBooks.failure()).toEqual(expectedAction);
+			expect(actions.bookActions.searchBooks.failure()).toEqual(expectedAction);
 		});
 
 		it('should create cancel search action successfully', () => {
 			const expectedAction = {
 				type: 'BOOKS_SEARCH_CANCEL',
 			};
-			expect(searchBooks.cancel()).toEqual(expectedAction);
+			expect(actions.bookActions.searchBooks.cancel()).toEqual(expectedAction);
 		});
 	});
 });

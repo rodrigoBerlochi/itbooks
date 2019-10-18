@@ -1,7 +1,7 @@
 import { FastImage, Header } from '@components/index';
 import { useReduxAction, useReduxState } from '@hooks/use-redux';
 import { useNavigation, useRoute } from '@react-navigation/core';
-import { fetchBook } from '@redux/actions';
+import actions from '@redux/actions';
 import { fetchedBook, isFetchingBook } from '@redux/selectors';
 import { downloadBook } from '@utils/downloadBook';
 import React, {
@@ -23,8 +23,8 @@ import { Button, Colors, Text, View } from 'react-native-ui-lib';
 
 const BookDetails: React.FC = React.memo(() => {
 	const transitionRef = useRef(null);
-	const fetchBookAction = useReduxAction(fetchBook.request);
-	const cancelFetchBook = useReduxAction(fetchBook.cancel);
+	const fetchBookAction = useReduxAction(actions.bookActions.fetchBook.request);
+	const cancelFetchBook = useReduxAction(actions.bookActions.fetchBook.cancel);
 	const book = useReduxState(fetchedBook);
 	const isFetching = useReduxState(isFetchingBook);
 	const { goBack } = useNavigation();

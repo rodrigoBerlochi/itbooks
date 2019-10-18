@@ -1,1 +1,5 @@
-export * from './books.actions';
+import * as bookActions from './books.actions';
+
+export default {
+	bookActions,
+};
