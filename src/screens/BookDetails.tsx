@@ -1,6 +1,8 @@
 import { FastImage, Header } from '@components/index';
 import { useReduxAction, useReduxState } from '@hooks/use-redux';
+import { Book } from '@interfaces/';
 import { useNavigation, useRoute } from '@react-navigation/core';
+import { RouteProp } from '@react-navigation/native-stack/lib/typescript/core/src';
 import actions from '@redux/actions';
 import { fetchedBook, isFetchingBook } from '@redux/selectors';
 import { downloadBook } from '@utils/downloadBook';
@@ -22,6 +24,16 @@ import { Transition, Transitioning } from 'react-native-reanimated';
 import { Layout } from 'react-native-ui-kitten';
 import { Button, Colors, Text, View } from 'react-native-ui-lib';
 
+type BookParamList = {
+	settings: undefined;
+	params: {
+		item: Book;
+	};
+	home: undefined;
+};
+
+type BookDetailsScreenNavigationProp = RouteProp<BookParamList, 'params'>;
+
 const BookDetails: React.FC = React.memo(() => {
 	const transitionRef = useRef(null);
 	const fetchBookAction = useReduxAction(actions.bookActions.fetchBook.request);
@@ -31,9 +43,9 @@ const BookDetails: React.FC = React.memo(() => {
 	const { goBack } = useNavigation();
 	const {
 		params: {
-			item: { title, bookInfoLink, image },
+			item: { title = '', bookInfoLink = '', image },
 		},
-	} = useRoute<any>();
+	} = useRoute<BookDetailsScreenNavigationProp>();
 
 	useEffect(() => {
 		fetchBookAction(bookInfoLink);

@@ -8,7 +8,7 @@ interface FastStyle {
 type FastImageType = FastImageSource & FastStyle;
 
 export const FastImage = React.memo<FastImageType>(
-	({ uri, headers, cache, priority, style }) => (
+	({ uri, headers, style, ...props }) => (
 		<Image
 			style={[style]}
 			source={{

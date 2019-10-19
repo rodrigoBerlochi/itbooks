@@ -11,7 +11,7 @@ interface ISearch {
 }
 
 export const SearchComponent = React.memo<ISearch>(
-	React.forwardRef<any, ISearch>(
+	React.forwardRef<typeof TextField, ISearch>(
 		({ action, placeholder, debounce = 500, ...props }, ref) => {
 			const debounceSubject = useRef(new Subject());
 
