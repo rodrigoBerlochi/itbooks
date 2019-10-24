@@ -77,7 +77,7 @@ import com.android.build.OutputFile
 
 project.ext.react = [
         entryFile   : "index.js",
-        enableHermes: true,  // clean and rebuild if changing
+        enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -101,7 +101,7 @@ def enableSeparateBuildPerCPUArchitecture = true
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -131,6 +131,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
 
     defaultConfig {
@@ -166,7 +170,12 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            shrinkResources true
+            // shrinkResources true
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
         }
     }
     // applicationVariants are e.g. debug, release
@@ -198,6 +207,10 @@ dependencies {
     implementation project(':react-native-reanimated')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.facebook.react:react-native:+'
+
+    // JSI C++ module made by us
+    // implementation project(":android-jsi")
+
     // From node_modules
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

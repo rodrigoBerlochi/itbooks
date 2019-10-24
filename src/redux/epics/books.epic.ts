@@ -7,12 +7,16 @@ import {
 	searchBooks,
 } from '../actions/books.actions';
 
-const fetchBooksEpic$: RootEpic = (action$, store$, { scrapper }) =>
+// TODO make getBooks async
+const fetchBooksEpic$: RootEpic = (action$, store$) =>
 	action$.pipe(
 		filter(isActionOf(fetchQueueBooks.request)),
 		switchMap(_ =>
 			from(
-				scrapper.fetchQueueBooks(store$.value.books.mainBooks.currentPage),
+				global.NativeItBooksModule.getBooks(
+					store$.value.books.mainBooks.currentPage,
+				),
+				// scrapper.fetchQueueBooks(store$.value.books.mainBooks.currentPage),
 			).pipe(
 				map(data =>
 					fetchQueueBooks.success(JSON.parse((data as unknown) as string)),
@@ -27,7 +31,6 @@ const fetchBooksEpic$: RootEpic = (action$, store$, { scrapper }) =>
 			),
 		),
 	);
-
 const searchBooksEpic$: RootEpic = (action$, store$, { scrapper }) =>
 	action$.pipe(
 		filter(isActionOf(searchBooks.request)),
