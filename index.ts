@@ -1,9 +1,9 @@
 import { AppRegistry, YellowBox } from 'react-native';
-import { useScreens } from 'react-native-screens';
+import { enableScreens } from 'react-native-screens';
 import { name as appName } from './app.json';
 import App from './src';
 
-useScreens();
+enableScreens();
 
 YellowBox.ignoreWarnings(['-[RCTRootView cancelTouches]'])
 
