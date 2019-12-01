@@ -15,13 +15,14 @@ function NavRouter() {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<NavigationNativeContainer>
-				<Stack.Navigator screenOptions={{ headerShown: false }}>
+				<Stack.Navigator
+					screenOptions={{ headerShown: false, gestureEnabled: true }}
+				>
 					<Stack.Screen
 						name={'Home'}
 						component={require('./screens/Home').default}
 					/>
 					<Stack.Screen
-						options={{ gestureEnabled: true }}
 						name={'Book'}
 						component={require('./screens/BookDetails').default}
 					/>

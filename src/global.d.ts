@@ -2,6 +2,6 @@
 
 declare const global: {
 	NativeItBooksModule: {
-		getBooks: (page: number) => any[];
+		getBooks: (page: number, cb: (r: string) => void) => any[];
 	};
 };

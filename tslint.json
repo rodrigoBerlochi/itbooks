@@ -33,6 +33,7 @@
       "no-increment-decrement": false,
       "no-namespace": false,
       "no-reference": false,
+      "no-shadowed-variable": false,
       "object-literal-sort-keys": false,
       "object-shorthand-properties-first": false,
       "prefer-array-literal": false,

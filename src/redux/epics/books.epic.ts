@@ -1,4 +1,4 @@
-import { from, of, pipe } from 'rxjs';
+import { bindCallback, from, of, pipe } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { isActionOf, RootEpic } from 'typesafe-actions';
 import {
@@ -7,30 +7,22 @@ import {
 	searchBooks,
 } from '../actions/books.actions';
 
+const getBooksCb = bindCallback(global.NativeItBooksModule.getBooks);
 // TODO make getBooks async
-const fetchBooksEpic$: RootEpic = (action$, store$) =>
+const fetchBooksEpic$: RootEpic = (action$, store$, _) =>
 	action$.pipe(
 		filter(isActionOf(fetchQueueBooks.request)),
 		switchMap(_ =>
-			from(
-				global.NativeItBooksModule.getBooks(
-					store$.value.books.mainBooks.currentPage,
-				),
-				// scrapper.fetchQueueBooks(store$.value.books.mainBooks.currentPage),
-			).pipe(
+			from(getBooksCb(store$.value.books.mainBooks.currentPage)).pipe(
 				map(data =>
 					fetchQueueBooks.success(JSON.parse((data as unknown) as string)),
 				),
-				catchError(
-					pipe(
-						fetchQueueBooks.failure,
-						of,
-					),
-				),
+				catchError(pipe(fetchQueueBooks.failure, of)),
 				takeUntil(action$.pipe(filter(isActionOf(fetchQueueBooks.cancel)))),
 			),
 		),
 	);
+
 const searchBooksEpic$: RootEpic = (action$, store$, { scrapper }) =>
 	action$.pipe(
 		filter(isActionOf(searchBooks.request)),
@@ -44,12 +36,7 @@ const searchBooksEpic$: RootEpic = (action$, store$, { scrapper }) =>
 				map(data =>
 					searchBooks.success(JSON.parse((data as unknown) as string)),
 				),
-				catchError(
-					pipe(
-						searchBooks.failure,
-						of,
-					),
-				),
+				catchError(pipe(searchBooks.failure, of)),
 				takeUntil(action$.pipe(filter(isActionOf(searchBooks.cancel)))),
 			),
 		),
@@ -61,12 +48,7 @@ const fetchBookEpic$: RootEpic = (action$, _, { scrapper }) =>
 		switchMap(({ payload }) =>
 			from(scrapper.fetchBook(payload)).pipe(
 				map(data => fetchBook.success(JSON.parse((data as unknown) as string))),
-				catchError(
-					pipe(
-						fetchBook.failure,
-						of,
-					),
-				),
+				catchError(pipe(fetchBook.failure, of)),
 				takeUntil(action$.pipe(filter(isActionOf(fetchBook.cancel)))),
 			),
 		),
